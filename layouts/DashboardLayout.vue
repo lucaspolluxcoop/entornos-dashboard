@@ -13,23 +13,9 @@
           :link="{
             name: 'Usuarios',
             icon: 'ni ni-single-02',
+            path: '/users',
           }"
-        >
-          <sidebar-item
-            :link="{
-              name: 'Usuarios',
-              icon: 'ni ni-single-02',
-              path: '/users',
-            }"
-          />
-          <sidebar-item
-            :link="{
-              name: 'Usuarios en revisión',
-              icon: 'ni ni-single-02',
-              path: '/revision-users',
-            }"
-          />
-        </sidebar-item>
+        />
         <sidebar-item
           :link="{
             name: 'Contratos',

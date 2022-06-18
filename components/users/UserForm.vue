@@ -35,28 +35,6 @@
                   </el-select>
                 </base-input>
               </div>
-              <div v-if="showDirectionFields" class="col-md-4">
-                <base-input label="Provincia" rules="required">
-                  <el-select
-                    v-model="formData.profile.stateId"
-                    autocomplete="off"
-                    filterable
-                    name="state"
-                    placeholder="Seleccione Provincia"
-                    rules="required"
-                    :disabled="isUpdate"
-                    @change="resetRoleData()"
-                  >
-                    <el-option
-                      v-for="option in stateOptions"
-                      :key="option.value"
-                      :label="option.label"
-                      :value="option.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </base-input>
-              </div>
             </div>
             <div class="row mb-4">
               <div v-if="showDenomination" class="col-md-4">
@@ -71,10 +49,10 @@
               </div>
               <div v-if="isCollege" class="col-md-4">
                 <base-input
-                  v-model="formData.profile.district"
-                  label="Distrito"
-                  name="district"
-                  placeholder="Distrito"
+                  v-model="formData.profile.businessName"
+                  label="Nombre Comercial"
+                  name="businessName"
+                  placeholder="Nombre Comercial"
                   type="text"
                   :rules="collegeRules"
                 />
@@ -225,7 +203,7 @@
                 />
               </div>
             </div>
-            <div v-if="showDirectionFields" class="row mb-4">
+            <div class="row mb-4">
               <div v-if="formData.profile.stateId" class="col-md-4">
                 <base-input label="Ciudad" rules="required">
                   <el-select
@@ -432,7 +410,7 @@ export default {
             firstName: null,
             lastName: null,
             denomination: null,
-            district: null,
+            businessName: null,
             cuit: null,
             phone: null,
             cellPhone: null,
@@ -444,7 +422,7 @@ export default {
             city: {
               id: null,
               state: {
-                id: null,
+                id: 21,
               },
             },
             zip: null,
@@ -482,7 +460,7 @@ export default {
           firstName: this.user.profile.firstName,
           lastName: this.user.profile.lastName ?? null,
           denomination: this.user.profile.denomination,
-          district: this.user.profile.district,
+          businessName: this.user.profile.businessName,
           cuit: this.user.profile.cuit ?? null,
           phone: this.user.profile.phone ?? null,
           cellPhone: this.user.profile.cellPhone ?? null,
@@ -602,9 +580,6 @@ export default {
         ? 'required|numeric|length:10'
         : 'numeric|length:10'
     },
-    showDirectionFields() {
-      return this.formData.roleId && this.states
-    },
     showDenomination() {
       return this.isCollege || this.isRealStateBroker
     },
@@ -648,7 +623,7 @@ export default {
       }
       this.formData.collegeId = null
       this.formData.profile.denomination = null
-      this.formData.profile.district = null
+      this.formData.profile.businessName = null
       this.formData.profile.plate.number = null
       this.formData.profile.plate.stateId = null
       this.formData.profile.plate.expirationDate = null
