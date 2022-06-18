@@ -7,7 +7,7 @@
         <div class="header-body text-center mb-7">
           <div class="text-center" style="margin-bottom: 5px">
             <h1 class="text-white">
-              TuNota
+              Administración
             </h1>
           </div>
           <div class="text-white">
@@ -162,6 +162,7 @@ export default {
       },
       error: '',
       errors: [],
+      // eslint-disable-next-line no-useless-escape
       reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     };
   },
@@ -238,7 +239,7 @@ export default {
       }
 
       if(!isValid) {
-        errors.forEach(error => {
+        this.errors.forEach(error => {
           this.error = this.error + '- ' + error + '<br>'
         });
       }

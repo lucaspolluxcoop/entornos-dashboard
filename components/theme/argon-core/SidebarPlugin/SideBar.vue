@@ -9,11 +9,11 @@
     "
     :data="backgroundColor"
   >
-    <div class="scrollbar-inner" ref="sidebarScrollArea">
+    <div ref="sidebarScrollArea" class="scrollbar-inner">
       <div class="sidenav-header d-flex justify-content-center">
         <a class="navbar-brand" href="#">
           <img
-            :src="require('~/assets/img/tunota-logo.png')"
+            :src="require('~/assets/img/logo.png')"
             class="navbar-brand-img"
             alt="Sidebar logo"
           />
@@ -29,8 +29,8 @@
               :link="link"
             >
               <sidebar-item
-                v-for="(subLink, index) in link.children"
-                :key="subLink.name + index"
+                v-for="(subLink, index2) in link.children"
+                :key="subLink.name + index2"
                 :link="subLink"
               >
               </sidebar-item>
@@ -44,7 +44,12 @@
 </template>
 <script>
 export default {
-  name: 'sidebar',
+  name: 'Sidebar',
+  provide() {
+    return {
+      autoClose: this.autoClose,
+    }
+  },
   props: {
     title: {
       type: String,
@@ -86,11 +91,6 @@ export default {
       description:
         'Whether sidebar should autoclose on mobile when clicking an item',
     },
-  },
-  provide() {
-    return {
-      autoClose: this.autoClose,
-    }
   },
   methods: {
     beforeDestroy() {

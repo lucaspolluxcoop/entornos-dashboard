@@ -6,7 +6,7 @@
         <notifications></notifications>
         <div class="header-body text-center mb-7">
           <div class="text-center" style="margin-bottom: 5px">
-            <h1 class="text-white">TuNota</h1>
+            <h1 class="text-white">Administración</h1>
           </div>
           <div class="text-white">
             <h3 class="text-white"><strong>Panel de Control</strong></h3>
