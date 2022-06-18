@@ -1,21 +1,7 @@
 export default {
-  /* mode: "spa", */
-  /* router: {
-    base: '/',
-    linkExactActiveClass: 'active'
-  }, */
-  /* meta: {
-    ogType: false,
-    ogDescription: false,
-    author: false,
-    ogTitle: false,
-    description: false,
-    viewport: false,
-    charset: false,
-  }, */
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'tunota-dashboard',
+    title: 'entornos-administracion',
     htmlAttrs: {
       lang: 'en'
     },
@@ -124,7 +110,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: 'http://localhost',
+    baseURL: 'http://localhost:8000',
     credentials: true
   },
 
@@ -136,28 +122,15 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    /* extend(config, ctx) {},
-    extractCSS: process.env.NODE_ENV === "production",
-    babel: {
-      plugins: [
-        [
-          "component",
-          {
-            libraryName: "element-ui",
-            styleLibraryName: "theme-chalk"
-          }
-        ]
-      ]
-    } */
   },
 
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'http://localhost:3000',
-    apiURL: process.env.API_URL || 'http://localhost:80'
+    baseURL: process.env.BASE_URL || 'http://localhost:3001',
+    apiURL: process.env.API_URL || 'http://localhost:8000'
   },
 
   privateRuntimeConfig: {
-    baseURL: process.env.API_URL || 'http://localhost',
+    baseURL: process.env.API_URL || 'http://localhost:8000',
     clientId: process.env.API_CLIENT_ID,
     clientSecret: process.env.API_CLIENT_SECRET,
   }
