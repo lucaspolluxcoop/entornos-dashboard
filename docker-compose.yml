@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  entornos-dashboard:
+    container_name: 'entornos-dashboard'
+    build:
+      context: .
+      target: 'dev-stage'
+    volumes:
+      - '.:/usr/src/app'
+    ports:
+      - '3001:3000'
+    command: >
+      bash -c "yarn install && yarn dev"

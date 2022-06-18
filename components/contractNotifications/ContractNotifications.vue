@@ -1,0 +1,71 @@
+<template>
+  <div>
+    <div v-if="contract">
+      <div class="row">
+        <div class="col">
+          <div class="card-wrapper">
+            <light-table
+              title="Notificaciones"
+              :module="`contract-notifications`"
+              :columns="columns"
+              :items="contract.notifications"
+              :total="total"
+              :has-show="true"
+              :has-edit="false"
+              :show-pagination="false"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import LightTable from '@/components/theme/tables/RegularTables/LightTable'
+
+export default {
+  name: 'ContracNotifications',
+  components: {
+    LightTable,
+  },
+  props: {
+    contract: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      columns: [
+        {
+          prop: 'identifier',
+          label: 'ID',
+          minWidth: 120,
+          sortable: true,
+        },
+        {
+          prop: 'notificationManagement.notificationType.title',
+          label: 'Tipo de Notificación',
+          minWidth: 120,
+          sortable: true,
+        },
+        {
+          prop: 'user.profile',
+          label: 'Dirigida A',
+          formatter: (row, col, value, index) =>
+            `${ value.cuit + ' - ' + value.firstName + ' ' + value.lastName }`,
+          minWidth: 160,
+        },
+      ],
+    }
+  },
+  computed: {
+  },
+  methods: {
+  },
+}
+</script>
+
+<style>
+</style>
