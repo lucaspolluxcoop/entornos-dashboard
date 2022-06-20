@@ -10,7 +10,7 @@
         <!-- Form groups used in grid -->
         <ValidationObserver v-slot="{ handleSubmit, invalid }">
           <form class="needs-validation" @submit.prevent="handleSubmit(submit)">
-            <div class="row">
+            <div class="row mb-4"> <!-- Rol y Denominación -->
               <div v-if="roles" class="col-md-4">
                 <base-input label="Rol" rules="required">
                   <el-select
@@ -35,24 +35,22 @@
                   </el-select>
                 </base-input>
               </div>
-            </div>
-            <div class="row mb-4">
               <div v-if="showDenomination" class="col-md-4">
                 <base-input
                   v-model="formData.profile.denomination"
                   :label="denominationLabel"
                   name="denomination"
-                  placeholder="Denominación"
+                  :placeholder="denominationLabel"
                   type="text"
                   :rules="denominationRules"
                 />
               </div>
               <div v-if="isCollege" class="col-md-4">
                 <base-input
-                  v-model="formData.profile.businessName"
-                  label="Nombre Comercial"
-                  name="businessName"
-                  placeholder="Nombre Comercial"
+                  v-model="formData.profile.district"
+                  label="Circunscripción"
+                  name="district"
+                  placeholder="Circunscripción"
                   type="text"
                   :rules="collegeRules"
                 />
@@ -92,7 +90,78 @@
                 </span>
               </div>
             </div>
-            <div class="row mb-4">
+            <div class="row mb-4"> <!-- Localización -->
+              <div v-if="formData.profile.stateId" class="col-md-4">
+                <base-input label="Ciudad" rules="required">
+                  <el-select
+                    v-model="formData.profile.cityId"
+                    autocomplete="off"
+                    filterable
+                    name="city"
+                    placeholder="Seleccione Ciudad"
+                  >
+                    <el-option
+                      v-for="option in cityOptions"
+                      :key="option.value"
+                      :label="option.label"
+                      :value="option.value"
+                    >
+                    </el-option>
+                  </el-select>
+                </base-input>
+              </div>
+              <div class="col-md-4">
+                <base-input
+                  v-model="formData.profile.zip"
+                  label="Código Postal"
+                  name="zip"
+                  placeholder="Código Postal"
+                  type="numeric"
+                  rules="required|numeric"
+                />
+              </div>
+              <div class="col-md-4">
+                <base-input
+                  v-model="formData.profile.street"
+                  label="Calle"
+                  name="street"
+                  placeholder="Calle"
+                  type="text"
+                  rules="required"
+                />
+              </div>
+              <div class="col-md-4">
+                <base-input
+                  v-model="formData.profile.number"
+                  label="Número"
+                  name="number"
+                  placeholder="Número"
+                  type="numeric"
+                  rules="required|numeric"
+                />
+              </div>
+              <div class="col-md-4">
+                <base-input
+                  v-model="formData.profile.floor"
+                  label="Piso"
+                  name="floor"
+                  placeholder="Piso"
+                  type="text"
+                  rules="numeric"
+                />
+              </div>
+              <div class="col-md-4">
+                <base-input
+                  v-model="formData.profile.apartment"
+                  label="Departamento"
+                  name="apartment"
+                  placeholder="Departamento"
+                  type="text"
+                  rules="alpha_num"
+                />
+              </div>
+            </div>
+            <div class="row mb-4"> <!-- Datos Personales -->
               <div class="col-md-4">
                 <base-input
                   v-model="formData.email"
@@ -203,87 +272,7 @@
                 />
               </div>
             </div>
-            <div class="row mb-4">
-              <div v-if="formData.profile.stateId" class="col-md-4">
-                <base-input label="Ciudad" rules="required">
-                  <el-select
-                    v-model="formData.profile.cityId"
-                    autocomplete="off"
-                    filterable
-                    name="city"
-                    placeholder="Seleccione Ciudad"
-                  >
-                    <el-option
-                      v-for="option in cityOptions"
-                      :key="option.value"
-                      :label="option.label"
-                      :value="option.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </base-input>
-              </div>
-              <div class="col-md-4">
-                <base-input
-                  v-model="formData.profile.zip"
-                  label="Código Postal"
-                  name="zip"
-                  placeholder="Código Postal"
-                  type="numeric"
-                  rules="required|numeric"
-                />
-              </div>
-              <div class="col-md-4">
-                <base-input
-                  v-model="formData.profile.street"
-                  label="Calle"
-                  name="street"
-                  placeholder="Calle"
-                  type="text"
-                  rules="required"
-                />
-              </div>
-              <div class="col-md-4">
-                <base-input
-                  v-model="formData.profile.number"
-                  label="Número"
-                  name="number"
-                  placeholder="Número"
-                  type="numeric"
-                  rules="required|numeric"
-                />
-              </div>
-              <div class="col-md-4">
-                <base-input
-                  v-model="formData.profile.floor"
-                  label="Piso"
-                  name="floor"
-                  placeholder="Piso"
-                  type="text"
-                  rules="numeric"
-                />
-              </div>
-              <div class="col-md-4">
-                <base-input
-                  v-model="formData.profile.apartment"
-                  label="Departamento"
-                  name="apartment"
-                  placeholder="Departamento"
-                  type="text"
-                  rules="alpha_num"
-                />
-              </div>
-              <div class="col-md-4">
-                <base-input
-                  v-model="formData.profile.neighbourhood"
-                  label="Barrio"
-                  name="neighbourhood"
-                  placeholder="Barrio"
-                  type="text"
-                />
-              </div>
-            </div>
-            <div v-if="isTenant" class="row mb-4">
+            <div v-if="isTenant" class="row mb-4"> <!-- Locatario -->
               <div class="col-md-4">
                 <base-input
                   v-model="formData.profile.familyGroupAdults"
@@ -305,7 +294,7 @@
                 />
               </div>
             </div>
-            <div v-if="isRealStateBroker" class="row mb-4">
+            <div v-if="isRealStateBroker" class="row mb-4"> <!-- Corredor Inmobiliario -->
               <div class="col-md-4">
                 <base-input
                   v-model="formData.profile.plate.number"
@@ -410,7 +399,7 @@ export default {
             firstName: null,
             lastName: null,
             denomination: null,
-            businessName: null,
+            district: null,
             cuit: null,
             phone: null,
             cellPhone: null,
@@ -460,7 +449,7 @@ export default {
           firstName: this.user.profile.firstName,
           lastName: this.user.profile.lastName ?? null,
           denomination: this.user.profile.denomination,
-          businessName: this.user.profile.businessName,
+          district: this.user.profile.district,
           cuit: this.user.profile.cuit ?? null,
           phone: this.user.profile.phone ?? null,
           cellPhone: this.user.profile.cellPhone ?? null,
@@ -506,11 +495,6 @@ export default {
     }),
     roleOptions() {
       return getSelectableRoles(this.roles)
-    },
-    stateOptions() {
-      return this.states.map((s) => {
-        return { label: s.name, value: s.id }
-      })
     },
     cityOptions() {
       return this.states
@@ -563,7 +547,6 @@ export default {
       return (
         this.isRealStateBroker &&
         this.colleges &&
-        this.formData.profile.stateId &&
         this.collegeOptions.length > 0
       )
     },
@@ -571,7 +554,6 @@ export default {
       return (
         this.isRealStateBroker &&
         this.colleges &&
-        this.formData.profile.stateId &&
         this.collegeOptions.length === 0
       )
     },
@@ -614,16 +596,16 @@ export default {
   },
   methods: {
     submit() {
+      const stopSubmitting = () => {
+        this.isSubmitting = false
+      }
       this.isSubmitting = true
-      this.$emit('saveUser', this.formData)
+      this.$emit('saveUser', this.formData, stopSubmitting)
     },
     resetRoleData(field) {
-      if (field === 'role') {
-        this.formData.profile.stateId = null
-      }
       this.formData.collegeId = null
       this.formData.profile.denomination = null
-      this.formData.profile.businessName = null
+      this.formData.profile.district = null
       this.formData.profile.plate.number = null
       this.formData.profile.plate.stateId = null
       this.formData.profile.plate.expirationDate = null

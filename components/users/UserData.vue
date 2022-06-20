@@ -3,17 +3,9 @@
     <collapse :active-index="0">
       <collapse-item>
         <h3 slot="title" class="mb-0">
-          Usuario: {{ user.profile.name }} {{ getIdentifier }}
+          Usuario: {{ user.profile.firstName }} {{ user.profile.lastName }} {{ getIdentifier }}
         </h3>
-        <div class="row mb-4">
-          <div class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Provincia</p>
-              <p>
-                {{ user.profile.city ? user.profile.city.state.name : '-' }}
-              </p>
-            </div>
-          </div>
+        <div class="row mb-4"> <!-- Rol y denominación -->
           <div class="col-sm-12 col-md-4">
             <div>
               <p class="h5 mb-0">Rol</p>
@@ -39,7 +31,55 @@
             </div>
           </div>
         </div>
-        <div class="row mb-4">
+        <div class="row mb-4"> <!-- Ubicación -->
+          <div class="col-sm-12 col-md-4">
+            <div>
+              <p class="h5 mb-0">Ciudad</p>
+              <p>
+                {{ user.profile.city ? getUserCity : '-' }}
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <div>
+              <p class="h5 mb-0">Calle</p>
+              <p>
+                {{ user.profile.street | displayDashWhenEmpty }}
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <div>
+              <p class="h5 mb-0">Número</p>
+              <p>
+                {{ user.profile.number | displayDashWhenEmpty }}
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <div>
+              <p class="h5 mb-0">Piso</p>
+              <p>
+                {{ user.profile.floor | displayDashWhenEmpty }}
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <div>
+              <p class="h5 mb-0">Departamento</p>
+              <p>
+                {{ user.profile.apartment | displayDashWhenEmpty }}
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-4">
+            <div>
+              <p class="h5 mb-0">Código Postal</p>
+              <p>{{ user.profile.zip }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-4"> <!-- Datos Personales -->
           <div class="col-sm-12 col-md-4">
             <div>
               <p class="h5 mb-0">Email</p>
@@ -99,16 +139,8 @@
               <p>{{ user.profile.website | displayDashWhenEmpty }}</p>
             </div>
           </div>
-          <div v-if="isCollege" class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Constancia</p>
-              <p>
-                <a target="_blank" :href="getUserFileUrl">Ver Constancia</a>
-              </p>
-            </div>
-          </div>
         </div>
-        <div v-if="isTenant" class="row mb-4">
+        <div v-if="isTenant" class="row mb-4"> <!-- Locatario -->
           <div class="col-sm-12 col-md-4">
             <div>
               <p class="h5 mb-0">Grupo Familiar: Cant. Adultos</p>
@@ -126,62 +158,7 @@
             </div>
           </div>
         </div>
-        <div class="row mb-4">
-          <div class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Ciudad</p>
-              <p>
-                {{ user.profile.city ? getUserCity : '-' }}
-              </p>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Calle</p>
-              <p>
-                {{ user.profile.street | displayDashWhenEmpty }}
-              </p>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Número</p>
-              <p>
-                {{ user.profile.number | displayDashWhenEmpty }}
-              </p>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Piso</p>
-              <p>
-                {{ user.profile.floor | displayDashWhenEmpty }}
-              </p>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Departamento</p>
-              <p>
-                {{ user.profile.apartment | displayDashWhenEmpty }}
-              </p>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Barrio</p>
-              <p>{{ user.profile.neighbourhood | displayDashWhenEmpty }}</p>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Código Postal</p>
-              <p>{{ user.profile.zip }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="isRealStateBroker" class="row mb-4">
+        <div v-if="isRealStateBroker" class="row mb-4"> <!-- Corredor Inmobiliario -->
           <div class="col-sm-12 col-md-4">
             <div>
               <p class="h5 mb-0">Matrícula</p>

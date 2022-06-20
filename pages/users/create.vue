@@ -11,7 +11,6 @@
       <div class="row">
         <div class="col">
           <user-form
-            ref="UserForm"
             title="Nuevo usuario"
             @saveUser="saveUser"
           />
@@ -43,13 +42,14 @@ export default {
     ...mapActions('modules/users', {
       createUser: 'createUser',
     }),
-    saveUser(user) {
+    saveUser(user, stopSubmitting) {
       this.createUser(user)
         .then(() => {
           this.$notify({
             type: 'success',
             message: 'Usuario creado!',
           })
+          stopSubmitting()
           this.$router.push('/users')
         })
         .catch((error) => {
@@ -57,7 +57,7 @@ export default {
             type: 'danger',
             message: formatCatchedErrors(error),
           })
-          this.$refs.UserForm.isSubmitting = false
+          stopSubmitting()
         })
     },
   },
