@@ -11,7 +11,6 @@
       <div class="row">
         <div class="col">
           <user-form
-            ref="UserForm"
             title="Editar usuario"
             :user="user"
             @saveUser="saveUser"
@@ -45,13 +44,14 @@ export default {
     ...mapActions('modules/users', {
       updateUser: 'updateUser',
     }),
-    saveUser(user) {
+    saveUser(user, stopSubmitting) {
       this.updateUser(user)
         .then(() => {
           this.$notify({
             type: 'success',
             message: 'Usuario actualizado!',
           })
+          stopSubmitting()
           if (this.$route.query.contract) {
             this.$router.push(`/contracts/${this.$route.query.contract}/edit`)
           } else {
@@ -63,7 +63,7 @@ export default {
             type: 'danger',
             message: formatCatchedErrors(error),
           })
-          this.$refs.UserForm.isSubmitting = false
+          stopSubmitting()
         })
     },
   },

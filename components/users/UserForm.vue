@@ -228,6 +228,16 @@
                   small-legend="(Tel. Fijo o Celular, completar al menos uno)"
                 />
               </div>
+              <div class="col-md-4">
+                <base-input
+                  v-model="formData.profile.nationality"
+                  label="Nacionalidad"
+                  name="nationality"
+                  placeholder="Nacionalidad"
+                  type="text"
+                  rules="required|alpha_spaces"
+                />
+              </div>
               <div v-if="showEconomicActivityType" class="col-md-4">
                 <base-input
                   label="Actividad económica"
@@ -422,6 +432,7 @@ export default {
             neighbourhood: null,
             familyGroupAdults: null,
             familyGroupUnderAge: null,
+            nationality: null,
             plate: {
               number: null,
               plateState: {
@@ -466,6 +477,7 @@ export default {
           neighbourhood: this.user.profile.neighbourhood,
           familyGroupAdults: this.user.profile.familyGroupAdults ?? null,
           familyGroupUnderAge: this.user.profile.familyGroupUnderAge ?? null,
+          nationality: this.user.profile.nationality ?? null,
           plate: {
             number: this.user.profile.plate?.number || null,
             plateStateId: this.user.profile.plate?.plateState.id || null,
@@ -510,9 +522,13 @@ export default {
       })
     },
     economicActivityTypeOptions() {
-      return this.economicActivityTypes.map((eat) => {
-        return { label: eat.title, value: eat.id }
-      })
+      return this.economicActivityTypes
+        .filter((eat) => {
+          return !eat.thirdParty
+        })
+        .map((eat) => {
+          return { label: eat.title, value: eat.id }
+        })
     },
     collegeOptions() {
       return this.colleges

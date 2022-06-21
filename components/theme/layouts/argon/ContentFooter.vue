@@ -24,11 +24,11 @@
         <div class="copyright text-center text-lg-right text-muted">
           © {{ year }}, Sitio desarrollado por
           <a
-            href="https://www.polluxcoop.com"
+            href="#"
             class="font-weight-bold ml-1"
             target="_blank"
             rel="noopener"
-            >Pollux</a
+            >Lucas Manuel</a
           >
         </div>
       </div>

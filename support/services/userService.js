@@ -27,6 +27,7 @@ const userService = (api) => {
           neighbourhood: payload.profile.neighbourhood,
           family_group_adults: payload.profile.familyGroupAdults,
           family_group_under_age: payload.profile.familyGroupUnderAge,
+          nationality: payload.profile.nationality,
           plate: {
             number: payload.profile.plate.number,
             plate_state_id: payload.profile.plate.plateStateId,

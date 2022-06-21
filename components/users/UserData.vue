@@ -27,7 +27,7 @@
           <div v-if="isRealStateBroker" class="col-sm-12 col-md-4">
             <div>
               <p class="h5 mb-0">Colegio</p>
-              <p>{{ user.college.profile.name }}</p>
+              <p>{{ user.college.profile.denomination }}</p>
             </div>
           </div>
         </div>
