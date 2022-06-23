@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-        <div class="row mb-4"> <!-- Ubicación -->
+        <div v-if="showDirections" class="row mb-4"> <!-- Ubicación -->
           <div class="col-sm-12 col-md-4">
             <div>
               <p class="h5 mb-0">Ciudad</p>
@@ -243,9 +243,12 @@ export default {
     isTenant() {
       return this.user.role.id === ROLES.LOCATARIO
     },
-    getUserFileUrl() {
-      return `${this.$config.apiURL}/storage/users/${this.user.collegeFilePath}`
+    isWarrant() {
+      return this.user.role.id === ROLES.GARANTE
     },
+    showDirections() {
+      return !(this.isTenant || this.isWarrant)
+    }
   },
 }
 </script>
