@@ -52,26 +52,6 @@
                     type="text"
                   />
                 </div>
-                <div v-if="states" class="col-md-3 form-group">
-                  <label class="form-control-label"> Provincia </label>
-                  <el-select
-                    v-model="formData.stateId"
-                    autocomplete="off"
-                    filterable
-                    name="state"
-                    placeholder="Seleccione Provincia"
-                    rules="required"
-                    @change="formData.cityId = null"
-                  >
-                    <el-option
-                      v-for="option in stateOptions"
-                      :key="option.value"
-                      :label="option.label"
-                      :value="option.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </div>
                 <div v-if="formData.stateId" class="col-md-3 form-group">
                   <label class="form-control-label"> Ciudad </label>
                   <el-select
@@ -90,15 +70,6 @@
                     >
                     </el-option>
                   </el-select>
-                </div>
-                <div class="col-md-3">
-                  <base-input
-                    v-model="formData.neightbourhood"
-                    label="Barrio"
-                    name="neightbourhood"
-                    placeholder="Barrio"
-                    type="text"
-                  />
                 </div>
                 <div class="col-md-3">
                   <base-input
@@ -230,10 +201,9 @@ export default {
           city: {
             id: null,
             state: {
-              id: null,
+              id: 21,
             },
           },
-          neightbourhood: null,
           zip: null,
           propertyIdentifier: null,
           ownerTaxId: null,
@@ -261,7 +231,6 @@ export default {
         apartment: this.property.apartment,
         stateId: this.property.city.state.id,
         cityId: this.property.city.id,
-        neightbourhood: this.property.neightbourhood,
         zip: this.property.zip,
         propertyIdentifier: this.property.propertyIdentifier,
         ownerTaxId: this.property.ownerTaxId,

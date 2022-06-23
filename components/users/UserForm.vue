@@ -90,7 +90,7 @@
                 </span>
               </div>
             </div>
-            <div class="row mb-4"> <!-- Localización -->
+            <div v-if="showDirections" class="row mb-4"> <!-- Localización -->
               <div v-if="formData.profile.stateId" class="col-md-4">
                 <base-input label="Ciudad" rules="required">
                   <el-select
@@ -609,6 +609,12 @@ export default {
     isWarrant() {
       return this.formData.roleId === ROLES.GARANTE
     },
+    isLocator() {
+      return this.formData.roleId === ROLES.LOCADOR
+    },
+    showDirections() {
+      return !(this.isWarrant || this.isTenant)
+    }
   },
   methods: {
     submit() {
