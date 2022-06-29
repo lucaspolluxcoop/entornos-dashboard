@@ -4,20 +4,9 @@ const warrantyService = (api) => {
 
     map(payload) {
       return {
-        title: payload.title,
-        description: payload.description,
-        document: payload.document,
         warranty_type_id: payload.warrantyTypeId,
         user_id: payload.userId
       }
-    },
-
-    getHeaders() {
-      return {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      };
     },
 
     getAll(params) {
@@ -29,11 +18,7 @@ const warrantyService = (api) => {
     },
 
     post(warranty) {
-      return api.$post('api/' + this.url, warranty, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+      return api.$post('api/' + this.url, this.map(warranty))
     },
 
     patch(warranty) {

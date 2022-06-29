@@ -312,9 +312,9 @@ export default {
         }))
     },
     warrantyOptions() {
-      return this.warranties.map((warranty) => ({
-        label: warranty.title,
-        value: warranty.id,
+      return this.warranties.map(({user, warrantyType, id}) => ({
+        label: `${warrantyType.title} - ${user.profile.firstName} ${user.profile.lastName}`,
+        value: id,
       }))
     },
     contractLocativeCanonOptions() {

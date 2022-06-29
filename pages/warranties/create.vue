@@ -46,7 +46,7 @@ export default {
             type: 'success',
             message: 'Garantía creada!',
           })
-          this.$router.push('/warranties')
+          this.$router.push('/contracts/create')
         })
         .catch((error) => {
           this.$notify({
