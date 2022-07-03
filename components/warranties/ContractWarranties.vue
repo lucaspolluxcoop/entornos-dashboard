@@ -11,10 +11,9 @@
               :per-page="getCurrentPerPage"
               :current-page="getCurrentPage"
               :columns="columns"
-              :items="contract.warrants"
-              :total="total"
-              :has-show="true"
-              :has-delete="true"
+              :items="contract.warranties"
+              :has-show="false"
+              :has-delete="false"
               :show-pagination="false"
               @delete="removeWarranty"
             />
@@ -44,7 +43,13 @@ export default {
     return {
       columns: [
         {
-          prop: 'profile',
+          prop: 'id',
+          label: 'ID',
+          minWidth: 120,
+          sortable: true,
+        },
+        {
+          prop: 'user.profile',
           label: 'Fiador/Garante',
           formatter: (row, col, value, index) =>
             `${ value.cuit + ' - ' + value.firstName + ' ' + value.lastName }`,

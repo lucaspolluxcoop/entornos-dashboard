@@ -5,15 +5,6 @@
         <div class="col-lg-6 col-7">
           <h6 class="h2 text-white d-inline-block mb-0">Contrato</h6>
         </div>
-        <div v-if="contract" class="col-lg-6 col-5 text-right">
-          <nuxt-link
-            :to="`/contracts/${contract.id}/edit`"
-            type="neutral"
-            class="btn btn-neutral btn-sm"
-          >
-            Editar
-          </nuxt-link>
-        </div>
       </div>
     </base-header>
     <div v-if="contract" class="container-fluid mt--6">

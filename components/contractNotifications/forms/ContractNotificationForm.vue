@@ -12,33 +12,15 @@
           <form class="needs-validation" @submit.prevent="handleSubmit(submit)">
             <div class="row mb-4">
               <div v-if="contract" class="col-md-4">
-                <base-input label="Parte 1" rules="required" name="firstPart">
+                <base-input label="Receptor" rules="required" name="user">
                   <el-select
-                    v-model="formData.firstPartId"
+                    v-model="formData.userId"
                     autocomplete="off"
                     filterable
-                    placeholder="Parte 1"
+                    placeholder="Receptor"
                   >
                     <el-option
-                      v-for="option in contractPartOptions"
-                      :key="option.value"
-                      :label="option.label"
-                      :value="option.value"
-                    >
-                    </el-option>
-                  </el-select>
-                </base-input>
-              </div>
-              <div v-if="contract" class="col-md-4">
-                <base-input label="Parte 2" rules="required" name="secondPart">
-                  <el-select
-                    v-model="formData.secondPartId"
-                    autocomplete="off"
-                    filterable
-                    placeholder="Parte 2"
-                  >
-                    <el-option
-                      v-for="option in contractPartOptions"
+                      v-for="option in userOptions"
                       :key="option.value"
                       :label="option.label"
                       :value="option.value"
@@ -108,8 +90,6 @@
                   </el-select>
                 </base-input>
               </div>
-            </div>
-            <div class="row mb-4">
               <div class="col-md-4">
                 <base-input
                   label="Respuesta"
@@ -204,10 +184,7 @@ export default {
           contract: {
             id: null,
           },
-          firstPart: {
-            id: null,
-          },
-          secondPart: {
+          user: {
             id: null,
           },
           contractNotificationResponse: {
@@ -231,8 +208,7 @@ export default {
         contractNotificationCategoryId:
           this.contractNotification.contractNotificationCategory.id,
         contractId: null,
-        firstPartId: this.contractNotification.firstPart.id,
-        secondPartId: this.contractNotification.secondPart.id,
+        userId: this.contractNotification.user.id,
         contractNotificationResponseId:
           this.contractNotification.contractNotificationResponse?.id || null,
       },
@@ -268,9 +244,9 @@ export default {
           value: id,
         }))
     },
-    contractPartOptions() {
+    userOptions() {
       return this.contractParts.map((user) => ({
-        label: `${user.profile.firstName} ${user.profile.lastName ?? ''}`,
+        label: `${user.role.label} - ${user.profile.firstName} ${user.profile.lastName ?? ''}`,
         value: user.id,
       }))
     },

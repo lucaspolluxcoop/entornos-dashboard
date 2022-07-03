@@ -9,8 +9,7 @@ const contractNotificationService = (api) => {
         notification_date: payload.notificationDate,
         response_date: payload.responseDate,
         contract_notification_response_id: payload.contractNotificationResponseId,
-        first_part_id: payload.firstPartId,
-        second_part_id: payload.secondPartId,
+        user_id: payload.userId,
         reason_id: payload.reasonId
       }
     },

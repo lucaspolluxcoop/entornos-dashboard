@@ -29,14 +29,33 @@
             :items="contracts"
             :total="total"
             :has-show="true"
-            :has-edit="true"
+            :has-edit="false"
             :has-delete="false"
             :is-contract="true"
             :filter="contractTypeOptions"
             filter-name="contractType"
             @update="fetchContracts"
             @delete="removeContract"
-          />
+          >
+            <template #actions="{ row }">
+              <nuxt-link
+                v-if="!isContractFinished(row)"
+                title="Crear Reclamo"
+                :to="`/contract-notifications/create?contract=${row.id}`"
+                class="btn base-button btn-outline-warning btn-sm"
+              >
+                <fa icon="exclamation-circle" />
+              </nuxt-link>
+              <nuxt-link
+                v-if="!isContractFinished(row)"
+                title="Extinción de Contrato"
+                :to="`/contracts/${row.id}/extintion`"
+                class="btn base-button btn-outline-danger btn-sm"
+              >
+                <fa icon="file-alt" />
+              </nuxt-link>
+            </template>
+          </light-table>
         </div>
       </div>
     </div>
@@ -146,6 +165,9 @@ export default {
         this.fetchContracts(params)
       })
     },
+    isContractFinished(contract) {
+      return contract.extintionDate !== null
+    }
   },
 }
 </script>

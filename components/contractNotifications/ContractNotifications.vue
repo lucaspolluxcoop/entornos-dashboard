@@ -8,9 +8,8 @@
               title="Notificaciones"
               :module="`contract-notifications`"
               :columns="columns"
-              :items="contract.notifications"
-              :total="total"
-              :has-show="true"
+              :items="contract.contractNotifications"
+              :has-show="false"
               :has-edit="false"
               :show-pagination="false"
             />
@@ -39,15 +38,15 @@ export default {
     return {
       columns: [
         {
-          prop: 'identifier',
+          prop: 'id',
           label: 'ID',
           minWidth: 120,
           sortable: true,
         },
         {
-          prop: 'notificationManagement.notificationType.title',
+          prop: 'contractNotificationCategory.title',
           label: 'Tipo de Notificación',
-          minWidth: 120,
+          minWidth: 200,
           sortable: true,
         },
         {
@@ -55,7 +54,7 @@ export default {
           label: 'Dirigida A',
           formatter: (row, col, value, index) =>
             `${ value.cuit + ' - ' + value.firstName + ' ' + value.lastName }`,
-          minWidth: 160,
+          minWidth: 200,
         },
       ],
     }
