@@ -22,6 +22,7 @@ import contractNotificationResponseService from '@/support/services/contractNoti
 import contractNotificationService from '@/support/services/contractNotificationService'
 import contractExtintionService from '@/support/services/contractExtintionService'
 import revisionUserService from '@/support/services/revisionUserService'
+import extintionReasonService from '@/support/services/extintionReasonService'
 
 export default ({ $axios, store }, inject) => {
   inject('registerService', registerService($axios))
@@ -48,4 +49,5 @@ export default ({ $axios, store }, inject) => {
   inject('contractNotificationService', contractNotificationService($axios))
   inject('contractExtintionService', contractExtintionService($axios))
   inject('revisionUserService', revisionUserService($axios))
+  inject('extintionReasonService', extintionReasonService($axios))
 }

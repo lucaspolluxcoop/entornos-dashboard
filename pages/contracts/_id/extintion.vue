@@ -4,7 +4,7 @@
       <div class="row align-items-center py-4">
         <div class="col-lg-6 col-7">
           <h6 class="h2 text-white d-inline-block mb-0 px-3">
-            Extinción y Parametros de Referencia del Contrato
+            Extinción del Contrato
           </h6>
         </div>
       </div>
@@ -34,11 +34,10 @@ export default {
   layout: 'DashboardLayout',
   async asyncData({ store, params }) {
     await store.dispatch('modules/contracts/getContract', params.id)
+    await store.dispatch('modules/extintionReasons/getExtintionReasons')
   },
   computed: {
-    ...mapState('modules/contracts', {
-      contract: (state) => state.contract,
-    }),
+    ...mapState('modules/contracts', ['contract']),
   },
   methods: {
     ...mapActions('modules/contracts', {
@@ -51,7 +50,7 @@ export default {
           type: 'success',
           message: 'Contrato Finalizado!',
         })
-        this.getContract(contract.id)
+        this.$router.push('/contracts')
       })
     },
   },

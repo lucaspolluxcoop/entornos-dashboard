@@ -32,9 +32,9 @@
                 </base-input>
               </div>
               <div class="col-md-4">
-                <base-input label="Motivo" rules="required" name="reason">
+                <base-input label="Motivo" rules="required" name="extintionReasonId">
                   <el-select
-                    v-model="formData.reason"
+                    v-model="formData.extintionReasonId"
                     autocomplete="off"
                     filterable
                     placeholder="Motivo"
@@ -52,7 +52,7 @@
               </div>
               <div v-if="addReasonClarification" class="col-md-4">
                 <base-input
-                  v-model="otherReason"
+                  v-model="formData.otherReason"
                   label="Especificar motivo"
                   name="reason2"
                   placeholder="Especificar motivo"
@@ -80,15 +80,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { Select, Option, DatePicker } from 'element-ui'
 import BaseInput from '@/components/theme/argon-core/Inputs/BaseInput.vue'
 import {
-  EXTINTION_REASONS_WITH_LABELS,
   EXTINTION_REASONS,
 } from '@/support/constants/general'
 
 export default {
-  name: 'ContractForm',
+  name: 'ContractExtintionForm',
   components: {
     [Select.name]: Select,
     [Option.name]: Option,
@@ -110,20 +110,21 @@ export default {
       formData: {
         id: this.contract.id,
         extintionDate: null,
-        reason: null,
+        extintionReasonId: null,
+        otherReason: null,
       },
-      otherReason: null,
     }
   },
   computed: {
+    ...mapState('modules/extintionReasons', ['extintionReasons']),
     reasonOptions() {
-      return EXTINTION_REASONS_WITH_LABELS.map(({ label, value }) => ({
-        label,
-        value,
+      return this.extintionReasons.map(({ id, title }) => ({
+        label:title,
+        value:id,
       }))
     },
     addReasonClarification() {
-      return this.formData.reason === EXTINTION_REASONS.OTRO
+      return this.formData.extintionReasonId === EXTINTION_REASONS.OTRO
     },
     clarificationRules() {
       return this.addReasonClarification ? 'required' : ''
@@ -131,27 +132,11 @@ export default {
   },
   methods: {
     submit() {
-      const reason = this.getReasonText(this.formData)
-      const formData = {
-        id: this.formData.id,
-        extintionDate: this.formData.extintionDate,
-        reason,
-      }
-      this.$emit('saveContract', formData)
-    },
-    getReasonText(formData) {
-      let reasonText = this.otherReason !== null ? this.otherReason : ''
-      if (reasonText === '') {
-        const reasonItem = EXTINTION_REASONS_WITH_LABELS.filter(
-          (reason) => reason.value === formData.reason
-        )
-        reasonText = reasonItem[0].label
-      }
-      return reasonText
+      this.$emit('saveContract', this.formData)
     },
     resetData() {
-      this.otherReason = null
-    },
+      this.formData.otherReason = null
+    }
   },
 }
 </script>

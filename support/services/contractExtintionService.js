@@ -5,7 +5,8 @@ const contractExtintionService = (api) => {
     map(payload) {
       return {
         extintion_date: payload.extintionDate,
-        reason: payload.reason
+        extintion_reason_id: payload.extintionReasonId,
+        other_reason: payload.otherReason,
       }
     },
 
