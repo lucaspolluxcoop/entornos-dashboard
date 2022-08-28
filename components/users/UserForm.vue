@@ -506,7 +506,7 @@ export default {
       plateStates: (state) => state.plateStates,
     }),
     roleOptions() {
-      return getSelectableRoles(this.roles)
+      return getSelectableRoles(this.roles, this.$auth.user.role.id)
     },
     cityOptions() {
       return this.states

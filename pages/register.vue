@@ -38,94 +38,106 @@
         <div class="col-lg-6 col-md-8">
           <div class="card bg-secondary border-0">
             <div class="card-body px-lg-5 py-lg-5">
-              <form
-                role="form"
-                @submit.prevent="handleRegister"
-                @keydown.enter="handleRegister"
-              >
-                <base-input
-                  v-model="form.username"
-                  alternative
-                  class="mb-3"
-                  prepend-icon="ni ni-single-02"
-                  placeholder="Usuario"
-                  name="username"
-                  label="Nombre de Usuario"
-                >
-                </base-input>
-
-                <validation-error :errors="apiValidationErrors.username"/>
-
-                <base-input
-                  v-model="form.email"
-                  alternative
-                  class="mb-3"
-                  prepend-icon="ni ni-email-83"
-                  placeholder="test@test.com"
-                  name="email"
-                  label="Correo electrónico"
-                >
-                </base-input>
-                <validation-error :errors="apiValidationErrors.email"/>
-
-                <base-input
-                  v-model="form.password"
-                  alternative
-                  class="mb-3"
-                  prepend-icon="ni ni-lock-circle-open"
-                  placeholder="xxxxxxxxxxx"
-                  type="password"
-                  name="password"
-                  label="Contraseña"
-                >
-                </base-input>
-
-                <validation-error :errors="apiValidationErrors.password"/>
-
-                <base-input
-                  v-model="form.password_confirmation"
-                  alternative
-                  class="mb-3"
-                  prepend-icon="ni ni-lock-circle-open"
-                  placeholder="xxxxxxxxxxx"
-                  type="password"
-                  name="password confirmation"
-                  label="Confirmar contraseña"
-                >
-                </base-input>
-
-                <validation-error
-                  :errors="apiValidationErrors.password_confirmation"
-                />
-
-                <div class="row my-4">
-                  <div class="col-12">
-                    <base-input
-                      :rules="{ required: { allowFalse: false } }"
-                      name="Privacy Policy"
+              <ValidationObserver v-slot="{ handleSubmit, invalid }">
+                <form class="needs-validation" @submit.prevent="handleSubmit(submit)">
+                  <base-input
+                    v-model="formData.email"
+                    alternative
+                    class="mb-3"
+                    prepend-icon="ni ni-email-83"
+                    placeholder="test@test.com"
+                    name="email"
+                    rules="required"
+                    label="Correo electrónico"
+                  />
+                  <base-input label="Rol" rules="required">
+                    <el-select
+                      v-model="formData.roleId"
+                      autocomplete="off"
+                      filterable
+                      name="roleId"
+                      placeholder="Seleccione un Rol"
+                      class="select-primary"
+                      @change="resetRoleData('role')"
                     >
-                      <base-checkbox
-                        v-model="form.agree"
-                        name="agree"
+                      <el-option
+                        v-for="option in roleOptions"
+                        :key="option.value"
+                        :label="option.label"
+                        :value="option.value"
+                        class="select-primary"
                       >
-                        <span class="text-muted"
-                        >Estoy de acuerdo con los
-                          <a href="#!">Términos y condiciones</a></span
-                        >
-                      </base-checkbox>
-                    </base-input>
+                      </el-option>
+                    </el-select>
+                  </base-input>
+                  <base-input v-if="isCorredor" label="Colegio" :rules="colegioRules">
+                    <el-select
+                      v-model="formData.collegeId"
+                      autocomplete="off"
+                      filterable
+                      name="collegeId"
+                      placeholder="Seleccione un Colegio"
+                      class="select-primary"
+                    >
+                      <el-option
+                        v-for="option in collegeOptions"
+                        :key="option.value"
+                        :label="option.label"
+                        :value="option.value"
+                        class="select-primary"
+                      >
+                      </el-option>
+                    </el-select>
+                  </base-input>
+                  <base-input
+                    v-model="formData.password"
+                    alternative
+                    class="mb-3"
+                    prepend-icon="ni ni-lock-circle-open"
+                    placeholder="xxxxxxxxxxx"
+                    type="password"
+                    name="password"
+                    rules="required"
+                    label="Contraseña"
+                  />
+                  <base-input
+                    v-model="formData.passwordConfirmation"
+                    alternative
+                    class="mb-3"
+                    prepend-icon="ni ni-lock-circle-open"
+                    placeholder="xxxxxxxxxxx"
+                    type="password"
+                    name="password confirmation"
+                    rules="required|confirmed:password"
+                    label="Confirmar contraseña"
+                  />
+                  <div class="row my-4">
+                    <div class="col-12">
+                      <base-input
+                        :rules="{ required: { allowFalse: false } }"
+                        name="Privacy Policy"
+                      >
+                        <base-checkbox v-model="formData.agree" name="agree">
+                          <span class="text-muted">
+                            Estoy de acuerdo con los
+                            <a href="#!">Términos y condiciones</a>
+                          </span>
+                        </base-checkbox>
+                      </base-input>
+                    </div>
                   </div>
-                </div>
-                <div class="text-center">
-                  <base-button
-                    type="primary"
-                    class="my-4"
-                    @click.prevent="handleRegister"
-                  >Crear cuenta
-                  </base-button
-                  >
-                </div>
-              </form>
+                  <div class="text-center">
+                    <base-button
+                      type="primary"
+                      class="my-4"
+                      :disabled="invalid"
+                      @click.prevent="handleRegister"
+                    >
+                      Crear cuenta
+                    </base-button>
+                  </div>
+                </form>
+              </ValidationObserver>
             </div>
           </div>
         </div>
@@ -134,14 +146,14 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
-import ValidationError from '@/components/shared/ValidationError.vue'
+import { mapState, mapActions } from 'vuex'
 import formMixin from '@/mixins/form-mixin'
+import { ROLES } from '@/support/constants/general'
 import BaseCheckbox from '@/components/theme/argon-core/Inputs/BaseCheckbox.vue'
 
 export default {
   name: 'Register',
-  components: { ValidationError, BaseCheckbox },
+  components: { BaseCheckbox },
   mixins: [formMixin],
   layout: 'AuthLayout',
   middleware({ store, redirect }) {
@@ -151,20 +163,47 @@ export default {
     }
   },
   auth: 'guest',
+  async asyncData({ store }) {
+    await store.dispatch('modules/roles/getRoles')
+    await store.dispatch('modules/userColleges/getColleges')
+  },
   data() {
     return {
-      form: {
-        username: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-        agree: false,
+      formData: {
+        email: null,
+        roleId: null,
+        collegeId: null,
+        password: null,
+        passwordConfirmation: null,
       },
+      agree: false,
+      allowedRoles: [ROLES.COLEGIO_CI,ROLES.CORREDOR_INMOBILIARIO],
       error: '',
       errors: [],
       // eslint-disable-next-line no-useless-escape
       reg: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
     };
+  },
+  computed: {
+    ...mapState('modules/roles', ['roles']),
+    ...mapState('modules/userColleges', ['colleges']),
+    roleOptions() {
+      return this.roles
+        .filter((role) => {
+          return this.allowedRoles.includes(role.id)
+        })
+        .map(({id , label}) => ({ label, value:id}))
+    },
+    collegeOptions() {
+      return this.colleges
+        .map(({id , profile}) => ({ label:profile.denomination, value:id}))
+    },
+    isCorredor() {
+      return this.formData.roleId === ROLES.CORREDOR_INMOBILIARIO
+    },
+    colegioRules() {
+      return this.isCorredor ? 'required' : ''
+    }
   },
   methods: {
     ...mapActions('modules/register', { create: 'create' }),
@@ -179,9 +218,9 @@ export default {
       }
       else {
         const formData = {
-          email: this.form.email,
-          username: this.form.username,
-          password: this.form.password
+          email: this.formData.email,
+          username: this.formData.username,
+          password: this.formData.password
         }
         this.create(formData)
           .then((res) => {
@@ -217,23 +256,23 @@ export default {
     },
     validate() {
       let isValid = true
-      if(!this.form.agree) {
+      if(!this.formData.agree) {
         isValid = false
         this.errors.push('Debe aceptar los terminos y condiciones')
       }
-      if(this.form.username === '') {
+      if(this.formData.username === '') {
         isValid = false
         this.errors.push('El nombre de usuario es requerido')
       }
-      if(this.form.email.length === 0) {
+      if(this.formData.email.length === 0) {
         isValid = false
         this.errors.push('El email es requerido')
       }
-      if(this.validateEmail(this.form.email)) {
+      if(this.validateEmail(this.formData.email)) {
         isValid = false
         this.errors.push('El email no tiene un formato correcto')
       }
-      if((this.form.password !== this.form.password_confirmation) || this.form.password.length === 0) {
+      if((this.formData.password !== this.formData.passwordConfirmation) || this.formData.password.length === 0) {
         isValid = false
         this.errors.push('La contraseñas son requeridas y deben coincidir')
       }
@@ -248,6 +287,11 @@ export default {
     },
     validateEmail(email) {
       return !this.reg.test(email)
+    },
+    resetRoleData(role) {
+      if (role === ROLES.COLEGIO_CI) {
+        this.formData.collegeId = null
+      }
     }
   },
 };

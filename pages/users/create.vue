@@ -39,9 +39,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('modules/users', {
-      createUser: 'createUser',
-    }),
+    ...mapActions('modules/users', ['createUser']),
     saveUser(user, stopSubmitting) {
       this.createUser(user)
         .then(() => {
@@ -50,7 +48,7 @@ export default {
             message: 'Usuario creado!',
           })
           stopSubmitting()
-          this.$router.push('/users')
+          this.checkRoute()
         })
         .catch((error) => {
           this.$notify({
@@ -60,6 +58,13 @@ export default {
           stopSubmitting()
         })
     },
+    checkRoute() {
+      if(this.$route.query.contract === 'true') {
+        this.$router.push({ path: '/contracts/create', query: { userCreated: true } })
+      } else {
+        this.$router.push('/users')
+      }
+    }
   },
 }
 </script>

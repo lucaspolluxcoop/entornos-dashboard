@@ -7,11 +7,25 @@
         </div>
         <div class="col-lg-6 col-5 text-right">
           <nuxt-link
-            to="/warranties/create"
+            :to="{ path: '/warranties/create', query: { contract: true }}"
             type="neutral"
             class="btn btn-neutral btn-sm"
           >
             Nueva Garantía
+          </nuxt-link>
+          <nuxt-link
+            :to="{ path: '/users/create', query: { contract: true }}"
+            type="neutral"
+            class="btn btn-neutral btn-sm"
+          >
+            Nuevo Usuario
+          </nuxt-link>
+          <nuxt-link
+            :to="{ path: '/properties/create', query: { contract: true }}"
+            type="neutral"
+            class="btn btn-neutral btn-sm"
+          >
+            Nueva Propiedad
           </nuxt-link>
         </div>
       </div>

@@ -74,7 +74,6 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
 export default {
   layout: 'DashboardLayout',
   middleware({ store, redirect }) {
@@ -82,127 +81,7 @@ export default {
     if (!store.$auth.loggedIn) {
       return redirect('/login')
     }
-  },
-  data() {
-    return {
-      staticCollections: [
-        { name: 'states', method: 'getStates' },
-        { name: 'economicActivityTypes', method: 'getEconomicActivityTypes' },
-        { name: 'roles', method: 'getRoles' },
-        { name: 'plateStates', method: 'getPlateStates' },
-        { name: 'propertyPublicServices', method: 'getPropertyPublicServices' },
-        { name: 'propertyTypes', method: 'getPropertyTypes' },
-        { name: 'propertyConservations', method: 'getPropertyConservations' },
-        { name: 'propertyTerminations', method: 'getPropertyTerminations' },
-        {
-          name: 'propertyMaintenanceStates',
-          method: 'getPropertyMaintenanceStates',
-        },
-        { name: 'warrantyTypes', method: 'getWarrantyTypes' },
-        { name: 'contractTypes', method: 'getContractTypes' },
-        { name: 'contractLocativeCanons', method: 'getContractLocativeCanons' },
-        {
-          name: 'contractNotificationCategories',
-          method: 'getContractNotificationCategories',
-        },
-        {
-          name: 'contractNotificationResponses',
-          method: 'getContractNotificationResponses',
-        },
-      ],
-    }
-  },
-  computed: {
-    ...mapState('modules/states', { states: (state) => state.states }),
-    ...mapState('modules/economicActivityTypes', {
-      economicActivityTypes: (state) => state.economicActivityTypes,
-    }),
-    ...mapState('modules/roles', { roles: (state) => state.roles }),
-    ...mapState('modules/plateStates', {
-      plateStates: (state) => state.plateStates,
-    }),
-    ...mapState('modules/propertyPublicServices', {
-      propertyPublicServices: (state) => state.propertyPublicServices,
-    }),
-    ...mapState('modules/propertyTypes', {
-      propertyTypes: (state) => state.propertyTypes,
-    }),
-    ...mapState('modules/propertyConservations', {
-      propertyConservations: (state) => state.propertyConservations,
-    }),
-    ...mapState('modules/propertyTerminations', {
-      propertyTerminations: (state) => state.propertyTerminations,
-    }),
-    ...mapState('modules/propertyMaintenanceStates', {
-      propertyMaintenanceStates: (state) => state.propertyMaintenanceStates,
-    }),
-    ...mapState('modules/warrantyTypes', {
-      warrantyTypes: (state) => state.warrantyTypes,
-    }),
-    ...mapState('modules/contractTypes', {
-      contractTypes: (state) => state.contractTypes,
-    }),
-    ...mapState('modules/contractLocativeCanons', {
-      contractLocativeCanons: (state) => state.contractLocativeCanons,
-    }),
-    ...mapState('modules/contractNotificationCategories', {
-      contractNotificationCategories: (state) =>
-        state.contractNotificationCategories,
-    }),
-    ...mapState('modules/contractNotificationResponses', {
-      contractNotificationResponses: (state) =>
-        state.contractNotificationResponses,
-    }),
-  },
-  created() {
-    this.setStaticCollections()
-  },
-  methods: {
-    ...mapActions('modules/states', { getStates: 'getStates' }),
-    ...mapActions('modules/economicActivityTypes', {
-      getEconomicActivityTypes: 'getEconomicActivityTypes',
-    }),
-    ...mapActions('modules/roles', { getRoles: 'getRoles' }),
-    ...mapActions('modules/plateStates', { getPlateStates: 'getPlateStates' }),
-    ...mapActions('modules/propertyPublicServices', {
-      getPropertyPublicServices: 'getPropertyPublicServices',
-    }),
-    ...mapActions('modules/propertyTypes', {
-      getPropertyTypes: 'getPropertyTypes',
-    }),
-    ...mapActions('modules/propertyConservations', {
-      getPropertyConservations: 'getPropertyConservations',
-    }),
-    ...mapActions('modules/propertyTerminations', {
-      getPropertyTerminations: 'getPropertyTerminations',
-    }),
-    ...mapActions('modules/propertyMaintenanceStates', {
-      getPropertyMaintenanceStates: 'getPropertyMaintenanceStates',
-    }),
-    ...mapActions('modules/warrantyTypes', {
-      getWarrantyTypes: 'getWarrantyTypes',
-    }),
-    ...mapActions('modules/contractTypes', {
-      getContractTypes: 'getContractTypes',
-    }),
-    ...mapActions('modules/contractLocativeCanons', {
-      getContractLocativeCanons: 'getContractLocativeCanons',
-    }),
-    ...mapActions('modules/contractNotificationCategories', {
-      getContractNotificationCategories: 'getContractNotificationCategories',
-    }),
-    ...mapActions('modules/contractNotificationResponses', {
-      getContractNotificationResponses: 'getContractNotificationResponses',
-    }),
-
-    setStaticCollections() {
-      this.staticCollections.forEach((collection) => {
-        if (this[collection.name].length === 0) {
-          this[collection.method]()
-        }
-      })
-    },
-  },
+  }
 }
 </script>
 

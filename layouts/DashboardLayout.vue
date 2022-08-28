@@ -68,6 +68,7 @@ import PerfectScrollbar from 'perfect-scrollbar'
 import 'perfect-scrollbar/css/perfect-scrollbar.css'
 import DashboardNavbar from '@/components/theme/layouts/argon/DashboardNavbar.vue'
 import ContentFooter from '@/components/theme/layouts/argon/ContentFooter.vue'
+import { checkCollections } from '@/support/utils/staticCollections'
 
 function hasElement(className) {
   return document.getElementsByClassName(className).length > 0
@@ -89,6 +90,9 @@ export default {
   components: {
     DashboardNavbar,
     ContentFooter,
+  },
+  created() {
+    checkCollections(this.$store, this.$auth)
   },
   methods: {
     initScrollbar() {
