@@ -7,6 +7,7 @@
         </div>
         <div class="col-lg-6 col-5 text-right">
           <nuxt-link
+            v-if="isRealStateBroker"
             to="/contracts/create"
             type="neutral"
             class="btn btn-neutral btn-sm"
@@ -65,6 +66,7 @@
 import { mapActions, mapState, mapGetters } from 'vuex'
 import { Table, TableColumn } from 'element-ui'
 import LightTable from '@/components/theme/tables/RegularTables/LightTable'
+import { ROLES } from '@/support/constants/general'
 
 export default {
   name: 'ContractsIndex',
@@ -143,6 +145,9 @@ export default {
         value: id,
       }))
     },
+    isRealStateBroker() {
+      return this.$auth.user.role.id === ROLES.CORREDOR_INMOBILIARIO
+    }
   },
   methods: {
     ...mapActions('modules/contracts', {
@@ -150,7 +155,7 @@ export default {
       deleteContract: 'deleteContract',
     }),
     fetchContracts(params) {
-      this.getContracts(params)
+      this.getContracts({ ...params, ...{ 'filter[owner]': this.$auth.user.id } })
     },
     removeContract(contract) {
       this.deleteContract(contract.id).then(() => {

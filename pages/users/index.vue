@@ -135,7 +135,9 @@ export default {
       deleteUser: 'deleteUser',
     }),
     fetchUsers(params) {
-      this.getUsers(params)
+      this.getUsers({...params, ...{
+        'filter[role]': this.$auth.user.role.name,
+      }})
     },
     removeUser(user) {
       this.deleteUser(user.id).then((res) => {

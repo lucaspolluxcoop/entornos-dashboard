@@ -17,6 +17,7 @@
           }"
         />
         <sidebar-item
+          v-if="$auth.user.roleId !== roles.COLEGIO_CI"
           :link="{
             name: 'Contratos',
             icon: 'ni ni-archive-2',
@@ -24,6 +25,7 @@
           }"
         />
         <sidebar-item
+          v-if="$auth.user.roleId !== roles.COLEGIO_CI"
           :link="{
             name: 'Inmuebles',
             icon: 'ni ni-building',
@@ -69,6 +71,7 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css'
 import DashboardNavbar from '@/components/theme/layouts/argon/DashboardNavbar.vue'
 import ContentFooter from '@/components/theme/layouts/argon/ContentFooter.vue'
 import { checkCollections } from '@/support/utils/staticCollections'
+import { ROLES } from '@/support/constants/general'
 
 function hasElement(className) {
   return document.getElementsByClassName(className).length > 0
@@ -90,6 +93,11 @@ export default {
   components: {
     DashboardNavbar,
     ContentFooter,
+  },
+  data() {
+    return {
+      roles: ROLES
+    }
   },
   created() {
     checkCollections(this.$store, this.$auth)

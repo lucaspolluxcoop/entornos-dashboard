@@ -7,6 +7,7 @@
         </div>
         <div class="col-lg-6 col-5 text-right">
           <nuxt-link
+            v-if="isRealStateBroker"
             to="/locations/create"
             type="neutral"
             class="btn btn-neutral btn-sm"
@@ -51,6 +52,7 @@ import {
   TableColumn,
 } from 'element-ui'
 import LightTable from '@/components/theme/tables/RegularTables/LightTable'
+import { ROLES } from '@/support/constants/general'
 import { capitalize } from '~/support/utils/string'
 
 export default {
@@ -130,6 +132,9 @@ export default {
         value: id,
       }))
     },
+    isRealStateBroker() {
+      return this.$auth.user.role.id === ROLES.CORREDOR_INMOBILIARIO
+    }
   },
   methods: {
     ...mapActions('modules/properties', {
