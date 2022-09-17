@@ -247,38 +247,54 @@ export default {
     },
   },
   data() {
+    let startContract = null
+    let endContract = null
+    let contractLocativeCanonId = null
+    let warranties = null
+    let contractTypeId = null
+    let propertyId = null
+    let ownerId = null
+    let tenantId = null
+    let locatorId = null
+    if ( this.contract.id ) {
+      startContract = this.contract.startContract
+      endContract = this.contract.endContract
+      contractLocativeCanonId = this.contract.contractLocativeCanon?.id || null
+      warranties = this.contract.warranties.map((warranty) => warranty.id)
+      contractTypeId = this.contract.contractType?.id || null
+      propertyId = this.contract.property?.id || null
+      ownerId = this.contract.owner?.id || null
+      tenantId = this.contract.tenant?.id || null
+      locatorId = this.contract.locator?.id || null
+    } else if (this.hasPropertyCreated) {
+      propertyId = this.currentProperty
+    }
+
+    // TODO Continuar fetcheando los usuarios y garantías creadas durante la creación de contrato y testear propiedad
     return {
       formData: {
         id: this.contract.id,
-        startContract: this.contract.startContract,
-        endContract: this.contract.endContract,
-        contractLocativeCanonId:
-          this.contract.contractLocativeCanon?.id || null,
-        warranties: this.contract.warranties.map((warranty) => warranty.id),
-        contractTypeId: this.contract.contractType?.id || null,
-        propertyId: this.contract.property?.id || null,
-        ownerId: this.contract.owner?.id || null,
-        tenantId: this.contract.tenant?.id || null,
-        locatorId: this.contract.locator?.id || null
+        startContract,
+        endContract,
+        contractLocativeCanonId,
+        warranties,
+        contractTypeId,
+        propertyId,
+        ownerId,
+        tenantId,
+        locatorId
       },
     }
   },
   computed: {
-    ...mapState('modules/contractTypes', {
-      contractTypes: (state) => state.contractTypes,
-    }),
+    ...mapState('modules/contractTypes', ['contractTypes']),
     ...mapState('modules/properties', {
       properties: (state) => state.properties,
+      currentProperty: (state) => state.property
     }),
-    ...mapState('modules/users', {
-      users: (state) => state.users,
-    }),
-    ...mapState('modules/warranties', {
-      warranties: (state) => state.warranties,
-    }),
-    ...mapState('modules/contractLocativeCanons', {
-      contractLocativeCanons: (state) => state.contractLocativeCanons,
-    }),
+    ...mapState('modules/users', ['users']),
+    ...mapState('modules/warranties', ['warranties']),
+    ...mapState('modules/contractLocativeCanons', ['contractLocativeCanons']),
     contractTypeOptions() {
       return this.contractTypes.map(({ title, id }) => ({
         label: title,
@@ -332,6 +348,9 @@ export default {
     isCanonRequired() {
       return this.canShowCanon ? 'required' : ''
     },
+    hasPropertyCreated() {
+      return this.$route.query && this.route.query.propertyCreated
+    }
   },
   methods: {
     submit() {

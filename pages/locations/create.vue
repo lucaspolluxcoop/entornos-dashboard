@@ -36,14 +36,15 @@ export default {
     ...mapActions('modules/properties', {
       createProperty: 'createProperty',
     }),
-    saveProperty(property) {
+    saveProperty(property, stopSubmitting) {
       this.createProperty(property)
         .then(() => {
           this.$notify({
             type: 'success',
             message: 'Locación creada!',
           })
-          this.$router.push(`/locations/${this.property.id}/edit`)
+          stopSubmitting()
+          this.checkRoute()
         })
         .catch((error) => {
           this.$notify({
@@ -52,6 +53,13 @@ export default {
           })
         })
     },
+    checkRoute() {
+      if(this.$route.query.contract === 'true') {
+        this.$router.push({ path: '/contracts/create', query: { propertyCreated: true } })
+      } else {
+        this.$router.push(`/locations/${this.property.id}/edit`)
+      }
+    }
   },
 }
 </script>

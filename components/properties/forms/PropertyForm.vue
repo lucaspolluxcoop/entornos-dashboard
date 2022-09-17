@@ -281,8 +281,11 @@ export default {
   },
   methods: {
     submit() {
+      const stopSubmitting = () => {
+        this.isSubmitting = false
+      }
       this.isSubmitting = true
-      this.$emit('saveProperty', this.formData)
+      this.$emit('saveProperty', this.formData, stopSubmitting)
     },
   },
 }

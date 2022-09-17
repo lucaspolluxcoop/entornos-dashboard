@@ -21,7 +21,7 @@
             Nuevo Usuario
           </nuxt-link>
           <nuxt-link
-            :to="{ path: '/properties/create', query: { contract: true }}"
+            :to="{ path: '/locations/create', query: { contract: true }}"
             type="neutral"
             class="btn btn-neutral btn-sm"
           >
@@ -50,10 +50,10 @@ export default {
     ContractForm,
   },
   layout: 'DashboardLayout',
-  async asyncData({ store }) {
-    await store.dispatch('modules/properties/getProperties')
-    await store.dispatch('modules/users/getUsers')
-    await store.dispatch('modules/warranties/getWarranties')
+  async asyncData({ store, $auth }) {
+    await store.dispatch('modules/properties/getProperties', { 'filter[user]': $auth.user.id })
+    await store.dispatch('modules/users/getUsers', { 'filter[role]': $auth.user.role.name })
+    await store.dispatch('modules/warranties/getWarranties', { 'filter[user]': $auth.user.id })
   },
   data() {
     return {

@@ -142,7 +142,7 @@ export default {
       deleteProperty: 'deleteProperty',
     }),
     fetchProperties(params) {
-      this.getProperties(params)
+      this.getProperties({ ...params, ...{ 'filter[user]': this.$auth.user.id } })
     },
     removeProperty(property) {
       this.deleteProperty(property.id).then(() => {
