@@ -1,5 +1,6 @@
 export const state = () => ({
   contracts: [],
+  users: [],
   contract: null,
   meta: [],
   contractParts: []
@@ -48,16 +49,19 @@ export const actions = {
 }
 
 export const mutations = {
-  SET_CONTRACTS(state, value) {
-    state.contracts = value
+  SET_CONTRACTS(state, contracts) {
+    state.contracts = contracts
   },
-  SET_CONTRACT(state, value) {
-    state.contract = value
+  SET_CONTRACT(state, contract) {
+    state.contract = contract
   },
-  SET_CONTRACT_PARTS(state, value) {
-    state.contractParts = value
+  SET_CONTRACT_PARTS(state, parts) {
+    state.contractParts = parts
   },
-  SET_META(state, value) {
-    state.meta = value
+  SET_META(state, meta) {
+    state.meta = meta
+  },
+  ADD_NEW_USER(state, user) {
+    state.users.push(user)
   }
 }

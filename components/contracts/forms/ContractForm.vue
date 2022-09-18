@@ -264,12 +264,20 @@ export default {
   },
   computed: {
     ...mapState('modules/contractTypes', ['contractTypes']),
+    ...mapState('modules/contracts', {
+      savedUsers: (state) => state.users
+    }),
     ...mapState('modules/properties', {
       properties: (state) => state.properties,
       currentProperty: (state) => state.property
     }),
-    ...mapState('modules/users', ['users']),
-    ...mapState('modules/warranties', ['warranties']),
+    ...mapState('modules/users', {
+      users: (state) => state.users
+    }),
+    ...mapState('modules/warranties', {
+      warranties: (state) => state.warranties,
+      currentWarranty: (state) => state.warranty
+    }),
     ...mapState('modules/contractLocativeCanons', ['contractLocativeCanons']),
     contractTypeOptions() {
       return this.contractTypes.map(({ title, id }) => ({
@@ -284,7 +292,7 @@ export default {
       }))
     },
     tenantOptions() {
-      return this.users
+      return [...this.users, ...this.savedUsers]
         .filter((user) => user.role.id === ROLES.LOCATARIO)
         .map(({ profile, id }) => ({
           label: `${profile.cuit ? profile.cuit + '- ' : ''}${
@@ -294,7 +302,7 @@ export default {
         }))
     },
     locatorOptions() {
-      return this.users
+      return [...this.users, ...this.savedUsers]
         .filter((user) => user.role.id === ROLES.LOCADOR)
         .map(({ profile, id }) => ({
           label: `${profile.cuit ? profile.cuit + '- ' : ''}${
@@ -324,13 +332,23 @@ export default {
     isCanonRequired() {
       return this.canShowCanon ? 'required' : ''
     },
-    hasPropertyCreated() {
-      return this.$route.query && this.$route.query.propertyCreated
-    }
   },
   created() {
-    if (this.hasPropertyCreated) {
-      this.formData.propertyId = this.currentProperty.id
+    // TODO: add debugger and save warranties like users
+    if (Object.keys(this.$route.query).length > 0) {
+      this.formData.propertyId = this.currentProperty?.id || null
+      if (this.savedUsers.length > 0) {
+        this.savedUsers.forEach((currentUser) => {
+          if (currentUser.role.id === ROLES.LOCATARIO) {
+            this.formData.tenantId = currentUser.id
+          } else if (currentUser.role.id === ROLES.LOCADOR) {
+            this.formData.locatorId = currentUser.id
+          }
+        })
+      }
+      if(this.currentWarranty) {
+        this.formData.warranties.push(this.currentWarranty.id)
+      }
     }
   },
   methods: {
@@ -345,5 +363,3 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>

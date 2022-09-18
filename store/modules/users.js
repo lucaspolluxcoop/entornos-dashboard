@@ -46,6 +46,11 @@ export const mutations = {
   },
   SET_USER(state, value) {
     state.user = value
+  },
+  ADD_NEW_USER(state) {
+    if (state.user) {
+      state.users.push(state.user)
+    }
   }
 }
 

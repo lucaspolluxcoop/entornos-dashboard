@@ -60,6 +60,8 @@ export const mutations = {
     state.meta = value
   },
   ADD_NEW_PROPERTY(state) {
-    state.properties.push(state.property)
+    if (state.property) {
+      state.properties.push(state.property)
+    }
   }
 }

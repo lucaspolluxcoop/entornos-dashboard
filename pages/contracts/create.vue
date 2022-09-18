@@ -54,8 +54,9 @@ export default {
     await store.dispatch('modules/properties/getProperties', { 'filter[user]': $auth.user.id })
     await store.dispatch('modules/users/getUsers', { 'filter[role]': $auth.user.role.name })
     await store.dispatch('modules/warranties/getWarranties', { 'filter[user]': $auth.user.id })
-    if (query.propertyCreated) {
+    if (Object.keys(query).length > 0) {
       await store.commit('modules/properties/ADD_NEW_PROPERTY')
+      await store.commit('modules/warranties/ADD_NEW_WARRANTY')
     }
   },
   data() {

@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import UserForm from '@/components/users/UserForm'
 import { formatCatchedErrors } from '@/util/errors'
 
@@ -38,8 +38,12 @@ export default {
       error: '',
     }
   },
+  computed: {
+    ...mapState('modules/users', ['user'])
+  },
   methods: {
     ...mapActions('modules/users', ['createUser']),
+    ...mapMutations('modules/contracts', ['ADD_NEW_USER']),
     saveUser(user, stopSubmitting) {
       this.createUser(user)
         .then(() => {
@@ -60,6 +64,7 @@ export default {
     },
     checkRoute() {
       if(this.$route.query.contract === 'true') {
+        this.ADD_NEW_USER(this.user)
         this.$router.push({ path: '/contracts/create', query: { userCreated: true } })
       } else {
         this.$router.push('/users')

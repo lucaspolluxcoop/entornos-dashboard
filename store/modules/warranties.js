@@ -46,5 +46,10 @@ export const mutations = {
   },
   SET_META(state, value) {
     state.meta = value
+  },
+  ADD_NEW_WARRANTY(state) {
+    if (state.warranty) {
+      state.warranties.push(state.warranty)
+    }
   }
 }
