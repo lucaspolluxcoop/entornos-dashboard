@@ -247,43 +247,19 @@ export default {
     },
   },
   data() {
-    let startContract = null
-    let endContract = null
-    let contractLocativeCanonId = null
-    let warranties = null
-    let contractTypeId = null
-    let propertyId = null
-    let ownerId = null
-    let tenantId = null
-    let locatorId = null
-    if ( this.contract.id ) {
-      startContract = this.contract.startContract
-      endContract = this.contract.endContract
-      contractLocativeCanonId = this.contract.contractLocativeCanon?.id || null
-      warranties = this.contract.warranties.map((warranty) => warranty.id)
-      contractTypeId = this.contract.contractType?.id || null
-      propertyId = this.contract.property?.id || null
-      ownerId = this.contract.owner?.id || null
-      tenantId = this.contract.tenant?.id || null
-      locatorId = this.contract.locator?.id || null
-    } else if (this.hasPropertyCreated) {
-      propertyId = this.currentProperty
-    }
-
-    // TODO Continuar fetcheando los usuarios y garantías creadas durante la creación de contrato y testear propiedad
     return {
       formData: {
-        id: this.contract.id,
-        startContract,
-        endContract,
-        contractLocativeCanonId,
-        warranties,
-        contractTypeId,
-        propertyId,
-        ownerId,
-        tenantId,
-        locatorId
-      },
+        id: this.contract?.id || null,
+        startContract: this.contract?.startContract || null,
+        endContract: this.contract?.endContract || null,
+        contractLocativeCanonId: this.contract?.contractLocativeCanon?.id || null,
+        warranties: this.contract?.warranties.map(warranty => warranty.id) || [],
+        contractTypeId: this.contract?.contractType.id || null,
+        propertyId: this.contract?.property.id || null,
+        ownerId: this.contract?.owner.id || null,
+        tenantId: this.contract?.tenant.id || null,
+        locatorId: this.contract?.locator.id || null
+      }
     }
   },
   computed: {
@@ -349,7 +325,12 @@ export default {
       return this.canShowCanon ? 'required' : ''
     },
     hasPropertyCreated() {
-      return this.$route.query && this.route.query.propertyCreated
+      return this.$route.query && this.$route.query.propertyCreated
+    }
+  },
+  created() {
+    if (this.hasPropertyCreated) {
+      this.formData.propertyId = this.currentProperty.id
     }
   },
   methods: {

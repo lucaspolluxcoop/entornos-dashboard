@@ -50,10 +50,13 @@ export default {
     ContractForm,
   },
   layout: 'DashboardLayout',
-  async asyncData({ store, $auth }) {
+  async asyncData({ store, $auth, query }) {
     await store.dispatch('modules/properties/getProperties', { 'filter[user]': $auth.user.id })
     await store.dispatch('modules/users/getUsers', { 'filter[role]': $auth.user.role.name })
     await store.dispatch('modules/warranties/getWarranties', { 'filter[user]': $auth.user.id })
+    if (query.propertyCreated) {
+      await store.commit('modules/properties/ADD_NEW_PROPERTY')
+    }
   },
   data() {
     return {
