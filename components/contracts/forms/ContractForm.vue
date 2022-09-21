@@ -330,7 +330,6 @@ export default {
     },
   },
   created() {
-    debugger
     if (Object.keys(this.$route.query).length > 0) {
       this.formData.propertyId = this.currentProperty?.id || null
       if (this.savedUsers.length > 0) {
