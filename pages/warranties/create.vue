@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import WarrantyForm from '@/components/warranties/forms/WarrantyForm'
 import { formatCatchedErrors } from '@/util/errors'
 
@@ -29,32 +29,41 @@ export default {
   layout: 'DashboardLayout',
   async asyncData({ store }) {
     await store.dispatch('modules/users/getUsers')
+    await store.dispatch('modules/warrantyTypes/getWarrantyTypes')
   },
   data() {
     return {
       error: '',
     }
   },
+  computed: {
+    ...mapState('modules/warranties', ['warranty'])
+  },
   methods: {
-    ...mapActions('modules/warranties', {
-      createWarranty: 'createWarranty',
-    }),
-    saveWarranty(warranty) {
+    ...mapActions('modules/warranties', ['createWarranty']),
+    ...mapMutations('modules/contracts', ['ADD_NEW_WARRANTY']),
+    saveWarranty(warranty, stopSubmitting) {
       this.createWarranty(warranty)
         .then((res) => {
           this.$notify({
             type: 'success',
             message: 'Garantía creada!',
           })
-          this.$router.push('/contracts/create')
+          stopSubmitting()
+          this.checkRoute()
         })
         .catch((error) => {
           this.$notify({
             type: 'danger',
             message: formatCatchedErrors(error),
           })
+          stopSubmitting()
         })
     },
+    checkRoute() {
+      this.ADD_NEW_WARRANTY(this.warranty)
+      this.$router.push({ path: '/contracts/create', query: { warrantyCreated: true } })
+    }
   },
 }
 </script>

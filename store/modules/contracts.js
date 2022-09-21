@@ -1,6 +1,7 @@
 export const state = () => ({
   contracts: [],
   users: [],
+  warranties: [],
   contract: null,
   meta: [],
   contractParts: []
@@ -63,5 +64,8 @@ export const mutations = {
   },
   ADD_NEW_USER(state, user) {
     state.users.push(user)
+  },
+  ADD_NEW_WARRANTY(state, warranty) {
+    state.warranties.push(warranty)
   }
 }

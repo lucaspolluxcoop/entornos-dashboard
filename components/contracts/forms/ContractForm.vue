@@ -265,19 +265,15 @@ export default {
   computed: {
     ...mapState('modules/contractTypes', ['contractTypes']),
     ...mapState('modules/contracts', {
-      savedUsers: (state) => state.users
+      savedUsers: (state) => state.users,
+      savedWarranties: (state) => state.warranties
     }),
     ...mapState('modules/properties', {
       properties: (state) => state.properties,
       currentProperty: (state) => state.property
     }),
-    ...mapState('modules/users', {
-      users: (state) => state.users
-    }),
-    ...mapState('modules/warranties', {
-      warranties: (state) => state.warranties,
-      currentWarranty: (state) => state.warranty
-    }),
+    ...mapState('modules/users', ['users']),
+    ...mapState('modules/warranties', ['warranties']),
     ...mapState('modules/contractLocativeCanons', ['contractLocativeCanons']),
     contractTypeOptions() {
       return this.contractTypes.map(({ title, id }) => ({
@@ -312,7 +308,7 @@ export default {
         }))
     },
     warrantyOptions() {
-      return this.warranties.map(({user, warrantyType, id}) => ({
+      return [...this.warranties, ...this.savedWarranties].map(({user, warrantyType, id}) => ({
         label: `${warrantyType.title} - ${user.profile.firstName} ${user.profile.lastName}`,
         value: id,
       }))
@@ -334,7 +330,7 @@ export default {
     },
   },
   created() {
-    // TODO: add debugger and save warranties like users
+    debugger
     if (Object.keys(this.$route.query).length > 0) {
       this.formData.propertyId = this.currentProperty?.id || null
       if (this.savedUsers.length > 0) {
@@ -346,8 +342,10 @@ export default {
           }
         })
       }
-      if(this.currentWarranty) {
-        this.formData.warranties.push(this.currentWarranty.id)
+      if(this.savedWarranties.length > 0) {
+        this.savedWarranties.forEach((currentWarranty) => {
+          this.formData.warranties.push(currentWarranty.id)
+        })
       }
     }
   },

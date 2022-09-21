@@ -57,6 +57,7 @@
             <div class="row">
               <div class="col-md-12 text-right">
                 <base-button
+                  :loading="isSubmitting"
                   native-type="submit"
                   type="primary"
                   :disabled="invalid"
@@ -117,7 +118,7 @@ export default {
         warrantyTypeId: this.warranty.warrantyType.id,
         userId: this.warranty.user?.id || null,
       },
-      fileErrors: [],
+      isSubmitting: false,
     }
   },
   computed: {
@@ -143,7 +144,11 @@ export default {
   },
   methods: {
     submit() {
-      this.$emit('saveWarranty', this.formData)
+      const stopSubmitting = () => {
+        this.isSubmitting = false
+      }
+      this.isSubmitting = true
+      this.$emit('saveWarranty', this.formData, stopSubmitting)
     },
   },
 }
