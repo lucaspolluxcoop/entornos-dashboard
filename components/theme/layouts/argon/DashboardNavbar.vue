@@ -53,20 +53,14 @@
           </div>
         </a>
 
-        <template>
-          <div class="dropdown-header noti-title">
-            <h6 class="text-overflow m-0">Welcome!</h6>
-          </div>
-          <nuxt-link :to="`/users/${$auth.user.id}`" class="dropdown-item">
-            <i class="ni ni-single-02"></i>
-            <span>My profile</span>
-          </nuxt-link>
-          <div class="dropdown-divider"></div>
-          <a to="" class="dropdown-item" @click.prevent="logout()">
-            <i class="ni ni-user-run"></i>
-            <span>Logout</span>
-          </a>
-        </template>
+        <div class="dropdown-header noti-title">
+          <h6 class="text-overflow m-0">Welcome {{ $auth.user.profile.firstName}}!</h6>
+        </div>
+        <div class="dropdown-divider"></div>
+        <a to="" class="dropdown-item" @click.prevent="logout()">
+          <i class="ni ni-user-run"></i>
+          <span>Logout</span>
+        </a>
       </base-dropdown>
     </ul>
   </base-nav>

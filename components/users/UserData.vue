@@ -12,22 +12,10 @@
               <p>{{ user.role.label }}</p>
             </div>
           </div>
-          <div v-if="showDenomination" class="col-sm-12 col-md-4">
+          <div v-if="isRealStateBroker" class="col-sm-12 col-md-4">
             <div>
               <p class="h5 mb-0">Denominación</p>
               <p>{{ user.profile.denomination }}</p>
-            </div>
-          </div>
-          <div v-if="isCollege" class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Distrito</p>
-              <p>{{ user.profile.district }}</p>
-            </div>
-          </div>
-          <div v-if="isRealStateBroker" class="col-sm-12 col-md-4">
-            <div>
-              <p class="h5 mb-0">Colegio</p>
-              <p>{{ user.college.profile.denomination }}</p>
             </div>
           </div>
         </div>
@@ -133,7 +121,7 @@
               </p>
             </div>
           </div>
-          <div v-if="showDenomination" class="col-sm-12 col-md-4">
+          <div v-if="isRealStateBroker" class="col-sm-12 col-md-4">
             <div>
               <p class="h5 mb-0">Sitio Web</p>
               <p>{{ user.profile.website | displayDashWhenEmpty }}</p>
@@ -230,12 +218,6 @@ export default {
     },
     getUserCity() {
       return capitalize(this.user.profile.city.title)
-    },
-    showDenomination() {
-      return this.isCollege || this.isRealStateBroker
-    },
-    isCollege() {
-      return this.user.role.id === ROLES.COLEGIO_CI
     },
     showEconomicActivityType() {
       return this.user.role.id === ROLES.GARANTE
