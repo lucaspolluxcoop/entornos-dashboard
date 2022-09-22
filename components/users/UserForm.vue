@@ -35,7 +35,7 @@
                   </el-select>
                 </base-input>
               </div>
-              <div v-if="showDenomination" class="col-md-4">
+              <div v-if="isRealStateBroker" class="col-md-4">
                 <base-input
                   v-model="formData.profile.denomination"
                   :label="denominationLabel"
@@ -44,50 +44,6 @@
                   type="text"
                   :rules="denominationRules"
                 />
-              </div>
-              <div v-if="isCollege" class="col-md-4">
-                <base-input
-                  v-model="formData.profile.district"
-                  label="Circunscripción"
-                  name="district"
-                  placeholder="Circunscripción"
-                  type="text"
-                  :rules="collegeRules"
-                />
-              </div>
-              <div v-if="canShowColleges" class="col-md-4">
-                <base-input
-                  label="Seleccione Colegio de Corredores Inmobiliario"
-                  name="collegeId"
-                  :rules="realStateBrokerExtraRules"
-                >
-                  <el-select
-                    v-model="formData.collegeId"
-                    autocomplete="off"
-                    filterable
-                    name="collegeId"
-                    placeholder="Seleccione Colegio de Corredores Inmobiliario"
-                    class="select-primary"
-                    :disabled="isUpdate"
-                    rules="required"
-                  >
-                    <el-option
-                      v-for="option in collegeOptions"
-                      :key="option.value"
-                      :label="option.label"
-                      :value="option.value"
-                      class="select-primary"
-                    >
-                    </el-option>
-                  </el-select>
-                </base-input>
-              </div>
-              <div v-else-if="hasNoCollege" class="col-md-4 pt-3">
-                <span>
-                  No existe colegio asociado para la provincia seleccionada, por
-                  favor cambiar la provincia seleccionada o cargar el colegio
-                  previamente
-                </span>
               </div>
             </div>
             <div v-if="showDirections" class="row mb-4"> <!-- Localización -->
@@ -272,7 +228,7 @@
                   :rules="otherEconomicActivityTypeRules"
                 />
               </div>
-              <div v-if="showDenomination" class="col-md-4">
+              <div v-if="isRealStateBroker" class="col-md-4">
                 <base-input
                   v-model="formData.profile.website"
                   label="Sitio Web"
@@ -402,9 +358,6 @@ export default {
           role: {
             id: null,
           },
-          college: {
-            id: null,
-          },
           profile: {
             firstName: null,
             lastName: null,
@@ -455,7 +408,6 @@ export default {
         id: this.user.id,
         email: this.user.email,
         roleId: this.user.role.id,
-        collegeId: this.user.college?.id || null,
         profile: {
           firstName: this.user.profile.firstName,
           lastName: this.user.profile.lastName ?? null,
@@ -499,9 +451,6 @@ export default {
     ...mapState('modules/economicActivityTypes', {
       economicActivityTypes: (state) => state.economicActivityTypes,
     }),
-    ...mapState('modules/userColleges', {
-      colleges: (state) => state.colleges,
-    }),
     ...mapState('modules/plateStates', {
       plateStates: (state) => state.plateStates,
     }),
@@ -530,62 +479,25 @@ export default {
           return { label: eat.title, value: eat.id }
         })
     },
-    collegeOptions() {
-      return this.colleges
-        .filter(
-          (college) =>
-            college.profile.city.state.id === this.formData.profile.stateId
-        )
-        .map((college) => ({
-          label: college.profile.denomination,
-          value: college.id,
-        }))
-    },
     isUpdate() {
       return this.user.id !== null
-    },
-    isCollege() {
-      return this.formData.roleId === ROLES.COLEGIO_CI
-    },
-    collegeRules() {
-      return this.isCollege ? 'required' : ''
     },
     isRealStateBroker() {
       return this.formData.roleId === ROLES.CORREDOR_INMOBILIARIO
     },
-    realStateBrokerExtraRules() {
-      return this.canShowColleges ? 'required' : ''
-    },
     plateRules() {
       return this.isRealStateBroker ? 'required' : ''
-    },
-    canShowColleges() {
-      return (
-        this.isRealStateBroker &&
-        this.colleges &&
-        this.collegeOptions.length > 0
-      )
-    },
-    hasNoCollege() {
-      return (
-        this.isRealStateBroker &&
-        this.colleges &&
-        this.collegeOptions.length === 0
-      )
     },
     isPhoneRequired() {
       return !this.formData.profile.phone && !this.formData.profile.cellPhone
         ? 'required|numeric|length:10'
         : 'numeric|length:10'
     },
-    showDenomination() {
-      return this.isCollege || this.isRealStateBroker
-    },
     denominationLabel() {
       return this.isCollege ? 'Denominación' : 'Denominación Comercial'
     },
     denominationRules() {
-      return this.showDenomination ? 'required' : ''
+      return this.isRealStateBroker ? 'required' : ''
     },
     showEconomicActivityType() {
       return this.isWarrant || this.isTenant
@@ -625,7 +537,6 @@ export default {
       this.$emit('saveUser', this.formData, stopSubmitting)
     },
     resetRoleData(field) {
-      this.formData.collegeId = null
       this.formData.profile.denomination = null
       this.formData.profile.district = null
       this.formData.profile.plate.number = null

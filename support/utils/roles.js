@@ -5,13 +5,11 @@ import { ROLES } from "../constants/general";
  * @param roles
  */
 export function getSelectableRoles(roles, creatorRoleId = null) {
-  let excludedRoles = ['sudo', 'administrator']
+  let excludedRoles = ['sudo', 'administrator', 'college_real_state_brokers']
   if (creatorRoleId === ROLES.CORREDOR_INMOBILIARIO) {
-    excludedRoles = [...excludedRoles, ...['college_real_state_brokers','real_state_broker']]
+    excludedRoles = [...excludedRoles, ...['real_state_broker']]
   } else if (creatorRoleId === ROLES.SUDO || creatorRoleId === ROLES.ADMIN) {
-    excludedRoles = [...excludedRoles, ...['real_state_broker', 'tenant', 'warrant', 'locator']]
-  } else if (creatorRoleId === ROLES.COLEGIO_CI) {
-    excludedRoles = [...excludedRoles, ...['college_real_state_brokers', 'tenant', 'warrant', 'locator']]
+    excludedRoles = [...excludedRoles, ...['tenant', 'warrant', 'locator']]
   }
   return roles
     .filter(({ name }) => !excludedRoles.includes(name))

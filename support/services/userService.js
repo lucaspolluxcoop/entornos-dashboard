@@ -59,10 +59,6 @@ const userService = (api) => {
 
     getColleges() {
       return api.$get('api/' + this.url + '/colleges')
-    },
-
-    approve(userId) {
-      return api.$post('api/' + this.url + '-approve/' + userId)
     }
   }
 }

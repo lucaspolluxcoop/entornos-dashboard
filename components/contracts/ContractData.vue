@@ -62,7 +62,7 @@
               {{ contract.extintionReason.title}}
             </p>
           </div>
-          <div v-if="contract.extintionReason.id === 9" class="col-sm-12 col-md-4 my-1">
+          <div v-if="contract.extintionReason && contract.extintionReason.id === 9" class="col-sm-12 col-md-4 my-1">
             <p class="h5 mb-0">Otro motivo</p>
             <p>
               {{ contract.otherReason}}

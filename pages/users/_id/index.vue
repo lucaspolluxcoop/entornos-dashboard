@@ -6,14 +6,6 @@
           <h6 class="h2 text-white d-inline-block mb-0">Usuario</h6>
         </div>
         <div v-if="user" class="col-lg-6 col-5 text-right">
-          <button
-            v-if="needsApproval"
-            type="neutral"
-            class="btn btn-neutral btn-sm"
-            @click="approve"
-          >
-            Aprobar Usuario
-          </button>
           <nuxt-link
             :to="`/users/${user.id}/edit`"
             type="neutral"
@@ -36,7 +28,6 @@
 <script>
 import { mapState } from 'vuex'
 import UserData from '@/components/users/UserData'
-import { ROLES, USER_STATES } from '~/support/constants/general'
 
 export default {
   name: 'UsersIndex',
@@ -51,23 +42,6 @@ export default {
     ...mapState('modules/users', {
       user: (state) => state.user,
     }),
-    needsApproval() {
-      return (
-        this.user.role.id === ROLES.COLEGIO_CI &&
-        this.user.userState.id === USER_STATES.CREADO
-      )
-    },
-  },
-  methods: {
-    approve() {
-      this.$userService.approve(this.user.id).then(() => {
-        this.$notify({
-          type: 'success',
-          message: 'Usuario Aprobado!',
-        })
-        this.$router.push('/revision-users')
-      })
-    },
   },
 }
 </script>

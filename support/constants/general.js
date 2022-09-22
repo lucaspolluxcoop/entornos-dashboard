@@ -6,7 +6,6 @@ export const BOOLEAN_OPTIONS = [
 export const ROLES = {
     SUDO: 1,
     ADMIN: 2,
-    COLEGIO_CI: 3,
     CORREDOR_INMOBILIARIO: 4,
     LOCADOR: 5,
     LOCATARIO: 6,
@@ -73,3 +72,5 @@ export const USER_STATES = {
     VERIFICADO: 2,
     INHABILITADO: 3,
 }
+
+export const NOTIFICATION_OTHER_REASONS = [4, 13, 19, 23, 32, 38]

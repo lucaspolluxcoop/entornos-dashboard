@@ -42,7 +42,7 @@
               <nuxt-link
                 v-if="!isContractFinished(row)"
                 title="Crear Reclamo"
-                :to="`/contract-notifications/create?contract=${row.id}`"
+                :to="`/contracts/${row.id}/notifications/create`"
                 class="btn base-button btn-outline-warning btn-sm"
               >
                 <fa icon="exclamation-circle" />
@@ -155,7 +155,7 @@ export default {
       deleteContract: 'deleteContract',
     }),
     fetchContracts(params) {
-      this.getContracts({ ...params, ...{ 'filter[owner]': this.$auth.user.id } })
+      this.getContracts(params)
     },
     removeContract(contract) {
       this.deleteContract(contract.id).then(() => {

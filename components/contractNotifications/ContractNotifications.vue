@@ -8,7 +8,7 @@
               title="Notificaciones"
               :module="`contract-notifications`"
               :columns="columns"
-              :items="contract.contractNotifications"
+              :items="contract.notifications"
               :has-show="false"
               :has-edit="false"
               :show-pagination="false"
@@ -44,8 +44,20 @@ export default {
           sortable: true,
         },
         {
-          prop: 'contractNotificationCategory.title',
+          prop: 'notificationManagement.title',
           label: 'Tipo de Notificación',
+          minWidth: 200,
+          sortable: true,
+        },
+        {
+          prop: 'notificationReason.title',
+          label: 'Motivo',
+          minWidth: 200,
+          sortable: true,
+        },
+        {
+          prop: 'notificationResponse.title',
+          label: 'Respuesta',
           minWidth: 200,
           sortable: true,
         },

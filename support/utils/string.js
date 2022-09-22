@@ -13,8 +13,7 @@ export function capitalize(string) {
 export function getPropertyFormattedData(property) {
   const id = property.propertyIdentifier
   const city = property.city.title
-  const state = property.city.state.code
-  const floor = property.floor ? '-' + property.floor : ''
-  const apartment = property.apartment ? '-' + property.apartment : ''
-  return `PI: ${id} - Dir: ${property.street}-${property.number}${floor}${apartment}-${city}-${state}`
+  const floor = property.floor ? ' ' + property.floor : ''
+  const apartment = property.apartment ?? ''
+  return `Partida Inmob: ${id}  ---  Dirección: ${property.street} ${property.number}${floor}${apartment} --- Ciudad: ${city}`
 }

@@ -51,7 +51,7 @@
                   </el-date-picker>
                 </base-input>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-8">
                 <base-input
                   label="Propiedad"
                   rules="required"
@@ -288,7 +288,7 @@ export default {
       }))
     },
     tenantOptions() {
-      return [...this.users, ...this.savedUsers]
+      return this.users
         .filter((user) => user.role.id === ROLES.LOCATARIO)
         .map(({ profile, id }) => ({
           label: `${profile.cuit ? profile.cuit + '- ' : ''}${
@@ -298,7 +298,7 @@ export default {
         }))
     },
     locatorOptions() {
-      return [...this.users, ...this.savedUsers]
+      return this.users
         .filter((user) => user.role.id === ROLES.LOCADOR)
         .map(({ profile, id }) => ({
           label: `${profile.cuit ? profile.cuit + '- ' : ''}${
@@ -308,10 +308,11 @@ export default {
         }))
     },
     warrantyOptions() {
-      return [...this.warranties, ...this.savedWarranties].map(({user, warrantyType, id}) => ({
-        label: `${warrantyType.title} - ${user.profile.firstName} ${user.profile.lastName}`,
-        value: id,
-      }))
+      return this.warranties
+        .map(({user, warrantyType, id}) => ({
+          label: `${warrantyType.title} - ${user.profile.firstName} ${user.profile.lastName}`,
+          value: id,
+        }))
     },
     contractLocativeCanonOptions() {
       return this.contractLocativeCanons.map((canon) => ({
@@ -330,7 +331,6 @@ export default {
     },
   },
   created() {
-    debugger
     if (Object.keys(this.$route.query).length > 0) {
       this.formData.propertyId = this.currentProperty?.id || null
       if (this.savedUsers.length > 0) {

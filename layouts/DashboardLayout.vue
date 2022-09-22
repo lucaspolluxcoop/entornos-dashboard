@@ -17,7 +17,6 @@
           }"
         />
         <sidebar-item
-          v-if="$auth.user.roleId !== roles.COLEGIO_CI"
           :link="{
             name: 'Contratos',
             icon: 'ni ni-archive-2',
@@ -25,18 +24,10 @@
           }"
         />
         <sidebar-item
-          v-if="$auth.user.roleId !== roles.COLEGIO_CI"
           :link="{
             name: 'Inmuebles',
             icon: 'ni ni-building',
             path: '/locations',
-          }"
-        />
-        <sidebar-item
-          :link="{
-            name: 'Reportes',
-            icon: 'ni ni-single-copy-04',
-            path: '/reports',
           }"
         />
         <hr

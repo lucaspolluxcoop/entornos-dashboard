@@ -4,11 +4,6 @@
       <div class="col-lg-6">
         <ul class="nav nav-footer">
           <li class="nav-item">
-            <a href="#" class="nav-link" target="_blank" rel="noopener"
-              >SITIO WEB</a
-            >
-          </li>
-          <li class="nav-item">
             <a
               href="https://polluxcoop.com/contact-us/"
               class="nav-link"
@@ -28,7 +23,7 @@
             class="font-weight-bold ml-1"
             target="_blank"
             rel="noopener"
-            >Lucas Manuel</a
+            >Ambrosino, Arregui, Biondi, Kratochvil</a
           >
         </div>
       </div>
