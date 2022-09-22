@@ -31,8 +31,6 @@
             :has-show="true"
             :has-edit="true"
             :has-delete="true"
-            :filter="getRoles"
-            filter-name="role"
             @update="fetchUsers"
             @delete="removeUser"
           >
@@ -72,13 +70,6 @@ export default {
           prop: 'id',
           label: 'Id',
           minWidth: 80,
-          sortable: true,
-        },
-        {
-          prop: 'identifierCode',
-          label: 'Cod. Identificación',
-          formatter: (row, col, value, index) => `${value ?? '-'}`,
-          minWidth: 160,
           sortable: true,
         },
         {
