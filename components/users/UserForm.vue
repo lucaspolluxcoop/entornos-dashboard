@@ -38,9 +38,9 @@
               <div v-if="isRealStateBroker" class="col-md-4">
                 <base-input
                   v-model="formData.profile.denomination"
-                  :label="denominationLabel"
+                  label="Denominación Comercial"
                   name="denomination"
-                  :placeholder="denominationLabel"
+                  placeholder="Denominación Comercial"
                   type="text"
                   :rules="denominationRules"
                 />
@@ -492,9 +492,6 @@ export default {
       return !this.formData.profile.phone && !this.formData.profile.cellPhone
         ? 'required|numeric|length:10'
         : 'numeric|length:10'
-    },
-    denominationLabel() {
-      return this.isCollege ? 'Denominación' : 'Denominación Comercial'
     },
     denominationRules() {
       return this.isRealStateBroker ? 'required' : ''

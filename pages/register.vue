@@ -58,29 +58,9 @@
                       name="roleId"
                       placeholder="Seleccione un Rol"
                       class="select-primary"
-                      @change="resetRoleData('role')"
                     >
                       <el-option
                         v-for="option in roleOptions"
-                        :key="option.value"
-                        :label="option.label"
-                        :value="option.value"
-                        class="select-primary"
-                      >
-                      </el-option>
-                    </el-select>
-                  </base-input>
-                  <base-input v-if="isCorredor" label="Colegio" :rules="colegioRules">
-                    <el-select
-                      v-model="formData.collegeId"
-                      autocomplete="off"
-                      filterable
-                      name="collegeId"
-                      placeholder="Seleccione un Colegio"
-                      class="select-primary"
-                    >
-                      <el-option
-                        v-for="option in collegeOptions"
                         :key="option.value"
                         :label="option.label"
                         :value="option.value"
@@ -165,14 +145,12 @@ export default {
   auth: 'guest',
   async asyncData({ store }) {
     await store.dispatch('modules/roles/getRoles')
-    await store.dispatch('modules/userColleges/getColleges')
   },
   data() {
     return {
       formData: {
         email: null,
         roleId: null,
-        collegeId: null,
         password: null,
         passwordConfirmation: null,
       },
@@ -186,17 +164,12 @@ export default {
   },
   computed: {
     ...mapState('modules/roles', ['roles']),
-    ...mapState('modules/userColleges', ['colleges']),
     roleOptions() {
       return this.roles
         .filter((role) => {
           return this.allowedRoles.includes(role.id)
         })
         .map(({id , label}) => ({ label, value:id}))
-    },
-    collegeOptions() {
-      return this.colleges
-        .map(({id , profile}) => ({ label:profile.denomination, value:id}))
     },
     isCorredor() {
       return this.formData.roleId === ROLES.CORREDOR_INMOBILIARIO
@@ -288,11 +261,6 @@ export default {
     validateEmail(email) {
       return !this.reg.test(email)
     },
-    resetRoleData(role) {
-      if (role === ROLES.COLEGIO_CI) {
-        this.formData.collegeId = null
-      }
-    }
   },
 };
 </script>

@@ -1,6 +1,4 @@
-# TuNota Frontend
-
-[![CD Pipeline](https://github.com/Tu-Nota/tunota-dashboard/actions/workflows/workflow.yml/badge.svg?branch=develop)](https://github.com/Tu-Nota/tunota-dashboard/actions/workflows/workflow.yml)
+# Entornos Dashboard
 
 
 ## How to install this project

@@ -9,7 +9,6 @@ import propertyZoneService from '@/support/services/propertyZoneService'
 import propertyPublicServiceService from '@/support/services/propertyPublicServiceService'
 import propertyConservationService from '@/support/services/propertyConservationService'
 import propertyTerminationService from '@/support/services/propertyTerminationService'
-import userCollegeService from '@/support/services/userCollegeService'
 import plateStateService from '@/support/services/plateStateService'
 import propertyMaintenanceStateService from '@/support/services/propertyMaintenanceStateService'
 import warrantyService from '@/support/services/warrantyService'
@@ -39,7 +38,6 @@ export default ({ $axios, store }, inject) => {
   inject('propertyPublicServiceService', propertyPublicServiceService($axios))
   inject('propertyConservationService', propertyConservationService($axios))
   inject('propertyTerminationService', propertyTerminationService($axios))
-  inject('userCollegeService', userCollegeService($axios))
   inject('plateStateService', plateStateService($axios))
   inject('propertyMaintenanceStateService', propertyMaintenanceStateService($axios))
   inject('warrantyService', warrantyService($axios))

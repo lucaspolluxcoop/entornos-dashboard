@@ -33,7 +33,6 @@ export default {
   layout: 'DashboardLayout',
   async asyncData({ store, params }) {
     await store.dispatch('modules/users/getUser', params.id)
-    await store.dispatch('modules/userColleges/getColleges')
   },
   computed: {
     ...mapState('modules/users', {

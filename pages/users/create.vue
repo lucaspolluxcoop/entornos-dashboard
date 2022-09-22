@@ -30,9 +30,6 @@ export default {
     UserForm,
   },
   layout: 'DashboardLayout',
-  async asyncData({ store }) {
-    await store.dispatch('modules/userColleges/getColleges')
-  },
   data() {
     return {
       error: '',

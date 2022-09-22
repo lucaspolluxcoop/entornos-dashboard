@@ -6,7 +6,6 @@ const userService = (api) => {
       return {
         email: payload.email,
         role_id: payload.roleId,
-        college_id: payload.collegeId,
         profile: {
           first_name: payload.profile.firstName,
           last_name: payload.profile.lastName,
@@ -56,10 +55,6 @@ const userService = (api) => {
     delete(id) {
       return api.$delete('api/' + this.url + '/' + id)
     },
-
-    getColleges() {
-      return api.$get('api/' + this.url + '/colleges')
-    }
   }
 }
 
