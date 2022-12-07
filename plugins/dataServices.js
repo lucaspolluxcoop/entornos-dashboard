@@ -25,6 +25,7 @@ import extintionReasonService from '@/support/services/extintionReasonService'
 import notificationTypesService from '@/support/services/notificationTypesService'
 import notificationResponsesService from '@/support/services/notificationResponsesService'
 import notificationsService from '@/support/services/notificationsService'
+import passwordService from '@/support/services/passwordService'
 
 export default ({ $axios, store }, inject) => {
   inject('registerService', registerService($axios))
@@ -54,4 +55,5 @@ export default ({ $axios, store }, inject) => {
   inject('notificationTypesService', notificationTypesService($axios))
   inject('notificationResponsesService', notificationResponsesService($axios))
   inject('notificationsService', notificationsService($axios))
+  inject('passwordService', passwordService($axios))
 }

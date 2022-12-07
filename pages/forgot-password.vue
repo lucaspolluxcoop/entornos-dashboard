@@ -6,10 +6,7 @@
         <notifications></notifications>
         <div class="header-body text-center mb-7">
           <div class="text-center" style="margin-bottom: 5px">
-            <h1 class="text-white">Administración</h1>
-          </div>
-          <div class="text-white">
-            <h3 class="text-white"><strong>Panel de Control</strong></h3>
+            <h1 class="text-white">Recuperar contraseña</h1>
           </div>
         </div>
       </div>
@@ -37,45 +34,26 @@
             <div class="card-body px-lg-5 py-lg-5">
               <form class="needs-validation" @submit.prevent="handleSubmit()">
                 <base-input
-                  v-model="form.username"
+                  v-model="form.email"
                   alternative
                   class="mb-3"
                   name="Email"
                   prepend-icon="ni ni-email-83"
                   placeholder="example@example.com"
-                  label="Usuario"
+                  label="Correo Electrónico"
                 >
                 </base-input>
                 <validation-error :errors="apiValidationErrors.email" />
-
-                <base-input
-                  v-model="form.password"
-                  alternative
-                  class="mb-3"
-                  name="Password"
-                  prepend-icon="ni ni-lock-circle-open"
-                  type="password"
-                  placeholder="**********"
-                  label="Contraseña"
-                >
-                </base-input>
-                <validation-error :errors="apiValidationErrors.password" />
-
                 <div class="text-center">
-                  <base-button type="primary" native-type="submit" class="my-4"
-                    >Iniciar sesión
+                  <base-button
+                    :loading="loading"
+                    type="primary"
+                    native-type="submit"
+                    class="my-4">
+                      Recuperar
                   </base-button>
                 </div>
               </form>
-            </div>
-          </div>
-          <div class="row mt-3">
-            <div class="col-6">
-              <router-link to="/forgot-password" class="text-light">
-                <small>
-                  ¿Olvidaste tu contraseña?
-                </small>
-              </router-link>
             </div>
           </div>
         </div>
@@ -88,7 +66,7 @@ import ValidationError from '@/components/shared/ValidationError.vue'
 import formMixin from '@/mixins/form-mixin'
 
 export default {
-  name: 'HomePage',
+  name: 'ForgotPassword',
   components: { ValidationError },
   mixins: [formMixin],
   layout: 'AuthLayout',
@@ -101,22 +79,29 @@ export default {
   data() {
     return {
       form: {
-        username: '',
-        password: '',
+        email: '',
       },
+      loading: false
     }
   },
   methods: {
     handleSubmit() {
-      this.$auth.loginWith('local', { data: this.form })
+      this.loading = true
+      this.$passwordService.post(this.form)
         .then(() => {
-          this.$router.push('/dashboard')
+          this.$router.push('/')
+          this.$notify({
+            type: 'success',
+            message:
+              'Le hemos enviado por correo electrónico el enlace para restablecer su contraseña!',
+          })
         })
-        .catch(() => {
+        .catch((error) => {
           this.$notify({
             type: 'danger',
-            message: 'Credenciales incorrectas!',
+            message: error,
           })
+          this.loading = false
         })
     },
   },

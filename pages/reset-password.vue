@@ -6,10 +6,7 @@
         <notifications></notifications>
         <div class="header-body text-center mb-7">
           <div class="text-center" style="margin-bottom: 5px">
-            <h1 class="text-white">Administración</h1>
-          </div>
-          <div class="text-white">
-            <h3 class="text-white"><strong>Panel de Control</strong></h3>
+            <h1 class="text-white">Recuperar contraseña</h1>
           </div>
         </div>
       </div>
@@ -37,45 +34,50 @@
             <div class="card-body px-lg-5 py-lg-5">
               <form class="needs-validation" @submit.prevent="handleSubmit()">
                 <base-input
-                  v-model="form.username"
+                  v-model="form.email"
                   alternative
                   class="mb-3"
                   name="Email"
                   prepend-icon="ni ni-email-83"
                   placeholder="example@example.com"
-                  label="Usuario"
+                  label="Correo Electrónico"
                 >
                 </base-input>
                 <validation-error :errors="apiValidationErrors.email" />
-
                 <base-input
                   v-model="form.password"
+                  type="password"
                   alternative
                   class="mb-3"
                   name="Password"
-                  prepend-icon="ni ni-lock-circle-open"
-                  type="password"
-                  placeholder="**********"
+                  prepend-icon="ni ni-email-83"
+                  placeholder="example@example.com"
                   label="Contraseña"
                 >
                 </base-input>
                 <validation-error :errors="apiValidationErrors.password" />
-
+                <base-input
+                  v-model="form.passwordConfirmation"
+                  type="password"
+                  alternative
+                  class="mb-3"
+                  name="passwordConfirmation"
+                  prepend-icon="ni ni-email-83"
+                  placeholder="example@example.com"
+                  label="Confirmar Contraseña"
+                >
+                </base-input>
+                <validation-error :errors="apiValidationErrors.passwordConfirmation" />
                 <div class="text-center">
-                  <base-button type="primary" native-type="submit" class="my-4"
-                    >Iniciar sesión
+                  <base-button
+                    :loading="loading"
+                    type="primary"
+                    native-type="submit"
+                    class="my-4">
+                      Guardar
                   </base-button>
                 </div>
               </form>
-            </div>
-          </div>
-          <div class="row mt-3">
-            <div class="col-6">
-              <router-link to="/forgot-password" class="text-light">
-                <small>
-                  ¿Olvidaste tu contraseña?
-                </small>
-              </router-link>
             </div>
           </div>
         </div>
@@ -88,7 +90,7 @@ import ValidationError from '@/components/shared/ValidationError.vue'
 import formMixin from '@/mixins/form-mixin'
 
 export default {
-  name: 'HomePage',
+  name: 'ForgotPassword',
   components: { ValidationError },
   mixins: [formMixin],
   layout: 'AuthLayout',
@@ -101,23 +103,29 @@ export default {
   data() {
     return {
       form: {
-        username: '',
+        email: '',
         password: '',
+        passwordConfirmation: '',
       },
+      loading: false
     }
   },
   methods: {
     handleSubmit() {
-      this.$auth.loginWith('local', { data: this.form })
-        .then(() => {
-          this.$router.push('/dashboard')
+      this.loading = true
+      const resetPassword = {
+        email: this.form.email,
+        password: this.form.password,
+        password_confirmation: this.form.passwordConfirmation,
+        token: this.$route.query.token,
+      }
+      this.$passwordService.reset(resetPassword).then(() => {
+        this.$router.push('/')
+        this.$notify({
+          type: 'success',
+          message: 'Su contraseña fue actualizada con exito!',
         })
-        .catch(() => {
-          this.$notify({
-            type: 'danger',
-            message: 'Credenciales incorrectas!',
-          })
-        })
+      })
     },
   },
 }
