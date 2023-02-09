@@ -11,7 +11,7 @@
         <ValidationObserver v-slot="{ handleSubmit, invalid }">
           <form class="needs-validation" @submit.prevent="handleSubmit(submit)">
             <div class="row mb-4">
-              <div class="col-md-2 form-group">
+              <div class="col-md-3 form-group">
                 <base-input
                   label="Inicio de Contrato"
                   name="startContract"
@@ -27,11 +27,12 @@
                     suffix-icon="fas fa-calendar-alt"
                     type="date"
                     value-format="yyyy-MM-dd"
+                    class="w-100"
                   >
                   </el-date-picker>
                 </base-input>
               </div>
-              <div class="col-md-2 form-group">
+              <div class="col-md-3 form-group">
                 <base-input
                   label="Fin de Contrato"
                   name="endContract"
@@ -47,11 +48,14 @@
                     suffix-icon="fas fa-calendar-alt"
                     type="date"
                     value-format="yyyy-MM-dd"
+                    class="w-100"
+                    :disabled="formData.startContract === null"
+                    :picker-options="pickerOptions"
                   >
                   </el-date-picker>
                 </base-input>
               </div>
-              <div class="col-md-8">
+              <div class="col-md-6">
                 <base-input
                   label="Propiedad"
                   rules="required"
@@ -259,7 +263,12 @@ export default {
         ownerId: this.contract?.owner.id || null,
         tenantId: this.contract?.tenant.id || null,
         locatorId: this.contract?.locator.id || null
-      }
+      },
+      pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() < Date.parse(document.getElementsByName('startContract')[0].value.split('-').reverse().join('-'));
+          },
+        },
     }
   },
   computed: {

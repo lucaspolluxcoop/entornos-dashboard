@@ -50,7 +50,7 @@ export default {
     ContractForm,
   },
   layout: 'DashboardLayout',
-  async asyncData({ store, $auth, query }) {
+  async asyncData({ store, query }) {
     await store.dispatch('modules/properties/getProperties')
     await store.dispatch('modules/users/getUsers')
     await store.dispatch('modules/warranties/getWarranties')

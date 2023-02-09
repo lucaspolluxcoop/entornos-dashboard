@@ -7,7 +7,7 @@ extend('cuit', {
   validate(value) {
     return validateCuit(value)
   },
-  message: 'El CUIT ingresado no es correcto'
+  message: 'El CUIT ingresado no es correcto. Por favor, verificar el mismo'
 })
 
 extend('required', {

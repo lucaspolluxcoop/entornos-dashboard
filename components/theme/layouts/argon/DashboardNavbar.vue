@@ -54,12 +54,12 @@
         </a>
 
         <div class="dropdown-header noti-title">
-          <h6 class="text-overflow m-0">Welcome {{ $auth.user.profile.firstName}}!</h6>
+          <h6 class="text-overflow m-0">Bienvenido {{ $auth.user.profile.firstName}}!</h6>
         </div>
         <div class="dropdown-divider"></div>
         <a to="" class="dropdown-item" @click.prevent="logout()">
           <i class="ni ni-user-run"></i>
-          <span>Logout</span>
+          <span>Cerrar Sesión</span>
         </a>
       </base-dropdown>
     </ul>
